@@ -1,6 +1,7 @@
 package BeerDB;
 
 public class DBConnector {
+    //change return types to ResultSets
     public static void insertTuple(SQLGenerator obj) {
         String statement = obj.generateInsertStatement();
         //execute statement

@@ -28,18 +28,17 @@ public class Main extends Application {
         //Example
         window.setTitle("Beer DB");
         Group root = new Group();
-        Scene scene = new Scene(root, 400, 250, Color.WHITE);
+        Scene scene = new Scene(root, 800, 500, Color.WHITE);
         TabPane tabPane = new TabPane();
         BorderPane borderPane = new BorderPane();
-        for (int i = 0; i < 5; i++) {
-            Tab tab = new Tab();
-            tab.setGraphic(new Circle(0, 0, 10));
-            HBox hbox = new HBox();
-            hbox.getChildren().add(new Label("Tab" + i));
-            hbox.setAlignment(Pos.CENTER);
-            tab.setContent(hbox);
-            tabPane.getTabs().add(tab);
-        }
+
+        Tab tab = new Tab();
+        BeerTableView beersView = new BeerTableView();
+        tab.setText("Beers");
+        tab.setContent(beersView.CreateLayout());
+        tab.setClosable(false);
+        tabPane.getTabs().add(tab);
+
         // bind to take available space
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());

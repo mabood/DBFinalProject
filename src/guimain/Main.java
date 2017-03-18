@@ -28,7 +28,7 @@ public class Main extends Application {
         //Example
         window.setTitle("Beer DB");
         Group root = new Group();
-        Scene scene = new Scene(root, 800, 500, Color.WHITE);
+        Scene scene = new Scene(root, 900, 500, Color.WHITE);
         TabPane tabPane = new TabPane();
         BorderPane borderPane = new BorderPane();
 

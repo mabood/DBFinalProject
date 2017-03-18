@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 
 
-public class ImageCache implements Runnable{
+public class BeerImageCache implements Runnable{
     static HashMap<String, Image> images = new HashMap<>();
     static ObservableList<Beer> beers = FXCollections.observableArrayList();
 

@@ -32,12 +32,29 @@ public class Main extends Application {
         TabPane tabPane = new TabPane();
         BorderPane borderPane = new BorderPane();
 
-        Tab tab = new Tab();
+        //Beers tab
+        Tab tab1 = new Tab();
         BeerTableView beersView = new BeerTableView();
-        tab.setText("Beers");
-        tab.setContent(beersView.CreateLayout());
-        tab.setClosable(false);
-        tabPane.getTabs().add(tab);
+        tab1.setText("Beers");
+        tab1.setContent(beersView.CreateLayout());
+        tab1.setClosable(false);
+        tabPane.getTabs().add(tab1);
+
+        //Breweries tab
+        Tab tab2 = new Tab();
+        BreweryTableView breweriesView = new BreweryTableView();
+        tab2.setText("Breweries");
+        tab2.setContent(breweriesView.CreateLayout());
+        tab2.setClosable(false);
+        tabPane.getTabs().add(tab2);
+
+        //Bars tab
+        Tab tab3 = new Tab();
+        BarTableView barsView = new BarTableView();
+        tab3.setText("Bars");
+        tab3.setContent(barsView.CreateLayout());
+        tab3.setClosable(false);
+        tabPane.getTabs().add(tab3);
 
         // bind to take available space
         borderPane.prefHeightProperty().bind(scene.heightProperty());

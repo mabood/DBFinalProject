@@ -4,7 +4,10 @@ import BeerDB.BeardyBee;
 import BeerDB.Beer;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class BeerTableView {
+public class BreweryTableView {
     private ImageView imgTile;
     private Label imgLabel;
 
@@ -31,7 +34,7 @@ public class BeerTableView {
     private TableView<Beer> beerTable;
 
 
-    public BeerTableView() {
+    public BreweryTableView() {
         titleLabel = new Label("Beer:");
         breweryLabel = new Label("Brewery:");
         abvLabel = new Label("ABV:");

@@ -4,6 +4,7 @@ import BeerDB.BeardyBee;
 import BeerDB.Beer;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -95,6 +96,7 @@ public class BeerTableView {
         GridPane.setConstraints(imgTile, 0, 0);
 
         imgBox.getChildren().addAll(imgLabel, imgTile);
+        imgBox.setAlignment(Pos.CENTER);
 
 
         GridPane metaBox = new GridPane();
@@ -116,6 +118,7 @@ public class BeerTableView {
 
         VBox beerButtons = new VBox(6);
         beerButtons.getChildren().addAll(allBarsQuery);
+        beerButtons.setAlignment(Pos.CENTER);
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
@@ -126,10 +129,20 @@ public class BeerTableView {
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
 
+        Button addBeerButton = new Button("Add Beer");
+        addBeerButton.setOnAction(e -> {
+            boolean result = AddBeerBox.display();
+            System.out.println(result);
+        });
+
+        HBox tableButtons = new HBox(10);
+        tableButtons.getChildren().add(addBeerButton);
+
         BorderPane pane = new BorderPane();
 
         pane.setCenter(beerTable);
         pane.setRight(metaPane);
+        pane.setBottom(tableButtons);
 
         return pane;
 

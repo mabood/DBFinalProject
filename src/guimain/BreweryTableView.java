@@ -160,7 +160,7 @@ public class BreweryTableView {
         addBreweryButton.setOnAction(e -> {
             AddBreweryBox addBrewery = new AddBreweryBox();
             addBrewery.display();
-            if (addBrewery.breweryAdded()) {
+            if (addBrewery.changesMade()) {
                 updateTable();
             }
         });

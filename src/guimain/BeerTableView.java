@@ -5,14 +5,13 @@ import BeerDB.Beer;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class BeerTableView {
     private ImageView imgTile;
@@ -30,6 +29,7 @@ public class BeerTableView {
     private Button allBarsQuery;
     private ObservableList<Beer> beers;
     private TableView<Beer> beerTable;
+    private Node metaPane;
 
 
     public BeerTableView() {
@@ -43,6 +43,7 @@ public class BeerTableView {
         imgTile = new ImageView();
         imgTile.setPreserveRatio(true);
         imgTile.setFitHeight(250);
+
         beerTitle = new Label();
         beerBrewery = new Label();
         beerAbv = new Label();
@@ -51,6 +52,7 @@ public class BeerTableView {
 
         beers = this.updateBeers();
         beerTable = this.CreateTableView();
+        metaPane = this.buildMeta();
     }
 
     public void updateMeta(Beer selected) {
@@ -68,6 +70,8 @@ public class BeerTableView {
         beerBrewery.setText(Integer.toString(selected.getBreweryId()));
         beerAbv.setText(Double.toString(selected.getBeerAbv()));
         beerIbu.setText(Integer.toString(selected.getBeerIbu()));
+
+        metaPane.setVisible(true);
     }
 
     private ObservableList<Beer> updateBeers() {
@@ -83,19 +87,33 @@ public class BeerTableView {
         //beerTable.getSelectionModel().selectFirst();
     }
 
-    public BorderPane CreateLayout() {
+    private Node buildImageContainer() {
+        StackPane constrainingPane = new StackPane();
 
-        updateTable();
+        constrainingPane.setMinWidth(200);
+        constrainingPane.setMaxWidth(200);
+        constrainingPane.setMinHeight(250);
+        constrainingPane.setMaxHeight(250);
 
+        constrainingPane.getChildren().add(imgTile);
+        imgTile.fitWidthProperty().bind(constrainingPane.widthProperty());
+        constrainingPane.setAlignment(Pos.CENTER);
+
+        return constrainingPane;
+    }
+
+    private Node buildMeta() {
         BorderPane metaPane = new BorderPane();
 
         GridPane imgBox = new GridPane();
         imgBox.setPadding(new Insets(10,10,10,10));
 
-        GridPane.setConstraints(imgLabel, 0, 0);
-        GridPane.setConstraints(imgTile, 0, 0);
+        Node imgContainer = buildImageContainer();
 
-        imgBox.getChildren().addAll(imgLabel, imgTile);
+        GridPane.setConstraints(imgLabel, 0, 0);
+        GridPane.setConstraints(imgContainer, 0, 0);
+
+        imgBox.getChildren().addAll(imgLabel, imgContainer);
         imgBox.setAlignment(Pos.CENTER);
 
 
@@ -119,6 +137,7 @@ public class BeerTableView {
         VBox beerButtons = new VBox(6);
         beerButtons.getChildren().addAll(allBarsQuery);
         beerButtons.setAlignment(Pos.CENTER);
+        beerButtons.setPadding(new Insets(10,10, 0,10));
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
@@ -129,6 +148,12 @@ public class BeerTableView {
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
 
+        metaPane.setVisible(false);
+
+        return metaPane;
+    }
+
+    private Node buildFooter() {
         Button addBeerButton = new Button("Add Beer");
         addBeerButton.setOnAction(e -> {
             boolean result = AddBeerBox.display();
@@ -138,14 +163,21 @@ public class BeerTableView {
         HBox tableButtons = new HBox(10);
         tableButtons.getChildren().add(addBeerButton);
 
+        tableButtons.setPadding(new Insets(10,10,10,10));
+
+        return tableButtons;
+    }
+
+
+    public BorderPane CreateLayout() {
         BorderPane pane = new BorderPane();
+        updateTable();
 
         pane.setCenter(beerTable);
         pane.setRight(metaPane);
-        pane.setBottom(tableButtons);
+        pane.setBottom(buildFooter());
 
         return pane;
-
     }
 
     private TableView<Beer> CreateTableView() {

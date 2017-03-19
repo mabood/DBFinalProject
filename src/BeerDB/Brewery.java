@@ -41,13 +41,15 @@ public class Brewery implements SQLGenerator{
         String output;
 
         if (getBreweryImgUrl() == null) {
-            output = "INSERT INTO Brewery (name, location)\nVALUES ('" +
-                    getBreweryName() + "', '" + getBreweryLocation() + "');\n";
+            output = "INSERT INTO Brewery (breweryName, breweryLocation)\n" +
+                    "VALUES ('" + getBreweryName() + "', '" +
+                    getBreweryLocation() + "');\n";
         }
         else {
-            output = "INSERT INTO Brewery (name, location, imgURL)\nVALUES ('" +
-                    getBreweryName() + "', '" + getBreweryLocation() + "', '" +
-                    getBreweryImgUrl() + "');\n";
+            output = "INSERT INTO Brewery (breweryName, breweryLocation," +
+                    " imgURL)\nVALUES ('" + getBreweryName() + "', '" +
+                    getBreweryLocation() + "', '" + getBreweryImgUrl() +
+                    "');\n";
         }
 
         return output;
@@ -55,17 +57,27 @@ public class Brewery implements SQLGenerator{
 
     @Override
     public String generateGetTableStatement() {
-        return "SELECT * FROM Brewery\nORDER BY name;\n";
+        return "SELECT * FROM Brewery\nORDER BY breweryName;\n";
     }
 
-
-    // won't work for god knows what fuckin reason
     @Override
     public String generateUpdateStatement() {
-        return "UPDATE Brewery\nSET name = '" + getBreweryName() + "', " +
-                "location = '" + getBreweryLocation() + "', imgURL = '" +
-                getBreweryImgUrl() + "'\nWHERE name = '" +
-                getBreweryName() + "';\n";
+        String output;
+
+        if (getBreweryImgUrl() == null) {
+            output = "UPDATE Brewery\nSET " +
+                    "breweryLocation = '" + getBreweryLocation() +
+                    "'\nWHERE breweryName = '" + getBreweryName() + "'\n";
+
+        }
+        else {
+            output = "UPDATE Brewery\nSET " +
+                    "breweryLocation = '" + getBreweryLocation() + "', imgURL = '" +
+                    getBreweryImgUrl() + "'\nWHERE breweryName = '" +
+                    getBreweryName() + "'\n";
+        }
+
+        return output;
     }
 
 

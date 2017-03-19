@@ -183,6 +183,7 @@ public class AddBeerBox {
         //if after all the checks, validated is still true, create Beer object
         if (validated) {
             beer = new Beer(beerName, breweryName, abv, ibu);
+            beer.setBeerImgUrl(imgUrl);
         }
 
         return beer;

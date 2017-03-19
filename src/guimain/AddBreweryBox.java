@@ -20,9 +20,11 @@ public class AddBreweryBox {
     private Label breweryExistsError;
     private Label locationLabel;
     private Label locationError;
+    private Label imgLabel;
 
     private TextField breweryNameField;
     private TextField locationField;
+    private TextField imgField;
 
 
     public AddBreweryBox() {
@@ -40,6 +42,10 @@ public class AddBreweryBox {
         locationError.setVisible(false);
         locationField = new TextField();
         locationField.setMinWidth(200);
+
+        imgLabel = new Label("Brewery Image URL:");
+        imgField = new TextField();
+        imgField.setMinWidth(200);
     }
 
     public void display() {
@@ -66,10 +72,13 @@ public class AddBreweryBox {
         GridPane.setConstraints(locationLabel, 0, 2);
         GridPane.setConstraints(locationField, 1, 2);
         GridPane.setConstraints(locationError, 1, 3);
+        GridPane.setConstraints(imgLabel, 0, 4);
+        GridPane.setConstraints(imgField, 1, 4);
 
         pane.getChildren().addAll(
                 breweryNameLabel, breweryNameField, breweryBlankError, breweryExistsError,
-                locationLabel, locationField, locationError);
+                locationLabel, locationField, locationError,
+                imgLabel, imgField);
 
         pane.setAlignment(Pos.CENTER);
 
@@ -107,6 +116,7 @@ public class AddBreweryBox {
         Brewery brewery = null;
         String breweryName = breweryNameField.getCharacters().toString();
         String location = locationField.getCharacters().toString();
+        String imgUrl;
         boolean validated = true;
 
         if (breweryName.length() == 0) {
@@ -132,9 +142,15 @@ public class AddBreweryBox {
             locationError.setVisible(false);
         }
 
+        imgUrl = imgField.getCharacters().toString();
+        if (!imgUrl.contains("http://") && !imgUrl.contains("https://")) {
+            imgUrl = null;
+        }
+
         //after all checks, if validated then create brewery
         if (validated) {
             brewery = new Brewery(breweryName, location);
+            brewery.setBreweryImgUrl(imgUrl);
         }
 
         return brewery;

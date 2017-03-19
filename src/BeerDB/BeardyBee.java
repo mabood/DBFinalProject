@@ -63,4 +63,16 @@ public class BeardyBee {
         return breweries;
     }
 
+    public static ObservableList<Bar> queryBarsTable() {
+        ObservableList<Bar> bars = FXCollections.observableArrayList();
+
+        Bar bar1 = new Bar("Marstons", "Downtown SLO");
+        Bar bar2 = new Bar("Hop Yard", "Pleasanton CA");
+
+        bars.add(bar1);
+        bars.add(bar2);
+
+        return bars;
+    }
+
 }

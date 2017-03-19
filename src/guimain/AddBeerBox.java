@@ -2,20 +2,12 @@ package guimain;
 
 import BeerDB.BeardyBee;
 import BeerDB.Beer;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -155,7 +147,7 @@ public class AddBeerBox {
             beerNameError.setVisible(false);
         }
 
-        if (!BeardyBee.BreweryExists(breweryName)) {
+        if (!BeardyBee.breweryExists(breweryName)) {
             validated = false;
             breweryError.setVisible(true);
         }

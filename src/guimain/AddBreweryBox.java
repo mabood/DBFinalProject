@@ -1,7 +1,6 @@
 package guimain;
 
 import BeerDB.BeardyBee;
-import BeerDB.Beer;
 import BeerDB.Brewery;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -113,7 +112,7 @@ public class AddBreweryBox {
             breweryBlankError.setVisible(true);
             breweryExistsError.setVisible(false);
         }
-        else if (BeardyBee.BreweryExists(breweryName)) {
+        else if (BeardyBee.breweryExists(breweryName)) {
             validated = false;
             breweryBlankError.setVisible(false);
             breweryExistsError.setVisible(true);

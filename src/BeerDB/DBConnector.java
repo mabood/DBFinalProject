@@ -9,23 +9,26 @@ public class DBConnector {
 
         Connection connect;
 
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
+
             connect = DriverManager.getConnection(
                     "jdbc:mysql://beerdb-inst.cmkxc8yt6omz.us-west-2." +
                             "rds.amazonaws.com:3306/Beer_Database?user=beerDB" +
                             "&password=PEOPLEMUMBLE");
 
+
             return connect;
         }
         catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Connection Failed :(");
 
             // call error box method
 
             return null;
         }
-
     }
 
     private static void executeNoResult(String statement) {
@@ -34,29 +37,18 @@ public class DBConnector {
             Connection connection = getConnection();
             Statement st = connection.createStatement();
             st.execute(statement);
+            st.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
+            System.out.println("Connection Failed :(");
 
-    private static ResultSet executeResult(String statement) {
-        ResultSet result;
-
-        try {
-            Connection connection = getConnection();
-            Statement st = connection.createStatement();
-            result = st.executeQuery(statement);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
     public static void insertTuple(SQLGenerator obj) {
         String insertStatement = obj.generateInsertStatement();
 
-        if (obj.generateRemoveStatement() != null) {
+        if (obj.generateInsertStatement() != null) {
             executeNoResult(insertStatement);
         }
     }
@@ -75,7 +67,14 @@ public class DBConnector {
         String updateStatement = obj.generateInsertStatement();
 
         if (obj.generateUpdateStatement() != null) {
-            executeNoResult(updateStatement);
+            try {
+                Connection connection = getConnection();
+                Statement st = connection.createStatement();
+                st.execute(updateStatement);
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -85,11 +84,18 @@ public class DBConnector {
         ResultSet rs = null;
 
         if (obj.generateGetTableStatement() != null) {
-            rs = executeResult(queryStatement);
+
+            try {
+                Connection connection = getConnection();
+                Statement st = connection.createStatement();
+                rs = st.executeQuery(queryStatement);
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return rs;
     }
-
 
 }

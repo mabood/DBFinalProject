@@ -109,6 +109,9 @@ public class BarTableView {
         addBarButton.setOnAction(e -> {
             AddBarBox barBox = new AddBarBox();
             barBox.display();
+            if (barBox.changesMade()) {
+                updateTable();
+            }
         });
 
         HBox tableButtons = new HBox(10);

@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AddBarBox {
+    private boolean changed;
     private Label barNameLabel;
     private Label barBlankError;
     private Label barExistsError;
@@ -26,6 +27,7 @@ public class AddBarBox {
 
 
     public AddBarBox() {
+        changed = false;
         barNameLabel = new Label("Bar Name:");
         barBlankError = new Label("Bar name cannot be blank!");
         barExistsError = new Label("Bar already exists!");
@@ -143,11 +145,16 @@ public class AddBarBox {
         Bar toAdd = validateFields();
         if (toAdd != null) {
             //BeardyBee.insertBrewery(toAdd);
+            changed = true;
             System.out.println(toAdd.toString());
             return true;
         }
         else {
             return false;
         }
+    }
+
+    public boolean changesMade() {
+        return changed;
     }
 }

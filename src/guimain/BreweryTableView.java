@@ -27,6 +27,8 @@ public class BreweryTableView {
     private Label breweryLocation;
 
     private Button allBeersQuery;
+    private Button editBreweryButton;
+
     private ObservableList<Brewery> breweries;
     private TableView<Brewery> breweryTable;
     private Node metaPane;
@@ -47,6 +49,7 @@ public class BreweryTableView {
         breweryLocation.setWrapText(true);
 
         allBeersQuery = new Button("List all beers from this brewery");
+        editBreweryButton = new Button("Edit this brewery");
 
         breweries = this.updateBreweries();
         breweryTable = this.CreateTableView();
@@ -66,6 +69,10 @@ public class BreweryTableView {
         imgTile.setImage(breweryImg);
         breweryName.setText(selected.getBreweryName());
         breweryLocation.setText(selected.getBreweryLocation());
+        editBreweryButton.setOnAction(e -> {
+            EditBreweryBox editBox = new EditBreweryBox(selected);
+            editBox.display();
+        });
 
         metaPane.setVisible(true);
     }
@@ -153,6 +160,9 @@ public class BreweryTableView {
         addBreweryButton.setOnAction(e -> {
             AddBreweryBox addBrewery = new AddBreweryBox();
             addBrewery.display();
+            if (addBrewery.breweryAdded()) {
+                updateTable();
+            }
         });
 
         HBox tableButtons = new HBox(10);

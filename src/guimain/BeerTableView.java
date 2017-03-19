@@ -162,6 +162,9 @@ public class BeerTableView {
         addBeerButton.setOnAction(e -> {
             AddBeerBox addBeer = new AddBeerBox();
             addBeer.display();
+            if (addBeer.changesMade()) {
+                updateTable();
+            }
         });
 
         HBox tableButtons = new HBox(10);

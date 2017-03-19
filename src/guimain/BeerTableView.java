@@ -67,7 +67,7 @@ public class BeerTableView {
         }
         imgTile.setImage(beerImg);
         beerTitle.setText(selected.getBeerName());
-        beerBrewery.setText(Integer.toString(selected.getBreweryId()));
+        beerBrewery.setText(selected.getBreweryName());
         beerAbv.setText(Double.toString(selected.getBeerAbv()));
         beerIbu.setText(Integer.toString(selected.getBeerIbu()));
 
@@ -156,8 +156,7 @@ public class BeerTableView {
         Button addBeerButton = new Button("Add Beer");
         addBeerButton.setOnAction(e -> {
             AddBeerBox addBeer = new AddBeerBox();
-            boolean result = addBeer.display();
-            System.out.println(result);
+            addBeer.display();
         });
 
         HBox tableButtons = new HBox(10);
@@ -187,9 +186,9 @@ public class BeerTableView {
         beerNameColumn.setMinWidth(200);
         beerNameColumn.setCellValueFactory(new PropertyValueFactory<>("beerName"));
 
-        TableColumn<Beer, Integer> breweryColumn = new TableColumn<>("Brewery");
+        TableColumn<Beer, String> breweryColumn = new TableColumn<>("Brewery");
         breweryColumn.setMinWidth(200);
-        breweryColumn.setCellValueFactory(new PropertyValueFactory<>("breweryId"));
+        breweryColumn.setCellValueFactory(new PropertyValueFactory<>("breweryName"));
 
         TableColumn<Beer, Double> beerAbvColumn = new TableColumn<>("ABV");
         beerAbvColumn.setMinWidth(100);

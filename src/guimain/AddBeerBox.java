@@ -1,5 +1,6 @@
 package guimain;
 
+import BeerDB.BeardyBee;
 import BeerDB.Beer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +21,6 @@ import javafx.stage.Stage;
 
 public class AddBeerBox {
     //Create variable
-    private Beer created;
     private Label beerNameLabel;
     private Label beerNameError;
     private Label breweryNameLabel;
@@ -67,7 +67,7 @@ public class AddBeerBox {
         imgField.setMinWidth(200);
     }
 
-    public boolean display() {
+    public void display() {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add a Beer to the Beers table");
@@ -116,7 +116,9 @@ public class AddBeerBox {
 
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
-            window.close();
+            if (onSubmitClick()) {
+                window.close();
+            }
         });
         noButton.setOnAction(e -> {
             window.close();
@@ -134,14 +136,72 @@ public class AddBeerBox {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
-
-        //Make sure to return answer
-        return true;
     }
 
-    private boolean validate_fields() {
+    private Beer validateFields() {
+        Beer beer = null;
+        String beerName = beerNameField.getCharacters().toString();
+        String breweryName = breweryField.getCharacters().toString();
+        Double abv = 0.0;
+        int ibu = 0;
+        String imgUrl;
         boolean validated = true;
 
-        return validated;
+        if (beerName.length() == 0) {
+            validated = false;
+            beerNameError.setVisible(true);
+        }
+        else {
+            beerNameError.setVisible(false);
+        }
+
+        if (!BeardyBee.BreweryExists(breweryName)) {
+            validated = false;
+            breweryError.setVisible(true);
+        }
+        else {
+            breweryError.setVisible(false);
+        }
+
+        try {
+            abv = Double.parseDouble(abvField.getCharacters().toString());
+        }
+        catch (Exception e) {
+            abvError.setVisible(true);
+            validated = false;
+        }
+
+        try {
+            ibu = Integer.parseInt(ibuField.getCharacters().toString());
+        }
+        catch (Exception e) {
+            ibuError.setVisible(true);
+            validated = false;
+        }
+
+        imgUrl = imgField.getCharacters().toString();
+
+        if (!imgUrl.contains("http://") && !imgUrl.contains("https://")) {
+            imgUrl = null;
+        }
+
+        //if after all the checks, validated is still true, create Beer object
+        if (validated) {
+            beer = new Beer(beerName, breweryName, abv, ibu);
+        }
+
+        return beer;
+    }
+
+    private boolean onSubmitClick() {
+        Beer toAdd = validateFields();
+        if (toAdd != null) {
+            //BeardyBee.insertBeer(toAdd);
+            System.out.println(toAdd.toString());
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

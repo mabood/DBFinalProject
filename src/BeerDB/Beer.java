@@ -3,15 +3,14 @@ package BeerDB;
 public class Beer implements SQLGenerator{
     private int beerId;
     private String beerName;
-    private int breweryId;
+    private String breweryName;
     private double beerAbv;
     private int beerIbu;
     private String beerImgUrl;
 
-    public Beer(int beerId, String beerName, int breweryId, double beerAbv, int beerIbu) {
-        this.beerId = beerId;
+    public Beer(String beerName, String breweryName, double beerAbv, int beerIbu) {
         this.beerName = beerName;
-        this.breweryId = breweryId;
+        this.breweryName = breweryName;
         this.beerAbv = beerAbv;
         this.beerIbu = beerIbu;
     }
@@ -32,12 +31,12 @@ public class Beer implements SQLGenerator{
         this.beerName = beerName;
     }
 
-    public int getBreweryId() {
-        return breweryId;
+    public String getBreweryName() {
+        return breweryName;
     }
 
-    public void setBreweryId(int breweryId) {
-        this.breweryId = breweryId;
+    public void setBreweryName(String breweryName) {
+        this.breweryName = breweryName;
     }
 
     public double getBeerAbv() {

@@ -67,7 +67,7 @@ public class BarTableView {
         }
         imgTile.setImage(beerImg);
         beerTitle.setText(selected.getBeerName());
-        beerBrewery.setText(Integer.toString(selected.getBreweryId()));
+        beerBrewery.setText(selected.getBreweryName());
         beerAbv.setText(Double.toString(selected.getBeerAbv()));
         beerIbu.setText(Integer.toString(selected.getBeerIbu()));
     }

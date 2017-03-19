@@ -7,8 +7,7 @@ public class Brewery implements SQLGenerator{
     private String breweryLocation;
     private String breweryImgUrl;
 
-    public Brewery(int breweryId, String breweryName, String breweryLocation) {
-        this.breweryId = breweryId;
+    public Brewery(String breweryName, String breweryLocation) {
         this.breweryName = breweryName;
         this.breweryLocation = breweryLocation;
     }

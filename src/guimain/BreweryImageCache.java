@@ -1,6 +1,7 @@
 package guimain;
 
 import BeerDB.Beer;
+import BeerDB.Brewery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -10,10 +11,10 @@ import java.util.HashMap;
 
 public class BreweryImageCache implements Runnable{
     static HashMap<String, Image> images = new HashMap<>();
-    static ObservableList<Beer> beers = FXCollections.observableArrayList();
+    static ObservableList<Brewery> breweries = FXCollections.observableArrayList();
 
-    static void updateBeers(ObservableList<Beer> updatedBeers) {
-        beers = updatedBeers;
+    static void updateBreweries(ObservableList<Brewery> updatedBreweries) {
+        breweries = updatedBreweries;
     }
 
     static Image fetchImage(String url) {
@@ -36,9 +37,9 @@ public class BreweryImageCache implements Runnable{
 
     @Override
     public void run() {
-        for (Beer br : beers) {
-            if (!images.containsKey(br.getBeerImgUrl())) {
-                images.put(br.getBeerImgUrl(), new Image(br.getBeerImgUrl()));
+        for (Brewery brew : breweries) {
+            if (!images.containsKey(brew.getBreweryImgUrl())) {
+                images.put(brew.getBreweryImgUrl(), new Image(brew.getBreweryImgUrl()));
             }
         }
     }

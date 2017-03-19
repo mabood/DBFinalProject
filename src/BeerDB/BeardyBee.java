@@ -45,6 +45,10 @@ public class BeardyBee {
         Brewery brewery3 = new Brewery(3, "Anheuser-Busch", "St. Louis, MO");
         brewery3.setBreweryImgUrl("https://pbs.twimg.com/profile_images/656966309498847232/b-a0OfKt.png");
 
+        breweries.add(brewery1);
+        breweries.add(brewery2);
+        breweries.add(brewery3);
+
         return breweries;
     }
 

@@ -50,7 +50,7 @@ public class BreweryTableView {
     }
 
     public void updateMeta(Brewery selected) {
-        Image breweryImg = BeerImageCache.getImage(selected.getBreweryImgUrl());
+        Image breweryImg = BreweryImageCache.getImage(selected.getBreweryImgUrl());
         if (breweryImg == null) {
             imgTile.setVisible(false);
             imgLabel.setVisible(true);
@@ -72,8 +72,8 @@ public class BreweryTableView {
         breweries = updateBreweries();
         breweryTable.setItems(BeardyBee.queryBreweryTable());
 
-        BreweryImageCache.updateBeers(breweries);
-        (new Thread(new BeerImageCache())).start();
+        BreweryImageCache.updateBreweries(breweries);
+        (new Thread(new BreweryImageCache())).start();
         //beerTable.getSelectionModel().selectFirst();
     }
 

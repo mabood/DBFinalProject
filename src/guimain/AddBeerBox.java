@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -109,7 +111,8 @@ public class AddBeerBox {
 
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
-            if (onSubmitClick()) {
+            if (onSubmitClick(window)) {
+
                 window.close();
             }
         });
@@ -189,7 +192,7 @@ public class AddBeerBox {
         return beer;
     }
 
-    private boolean onSubmitClick() {
+    private boolean onSubmitClick(Stage window) {
         Beer toAdd = validateFields();
         if (toAdd != null) {
             BeardyBee.insertBeer(toAdd);

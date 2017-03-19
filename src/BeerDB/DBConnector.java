@@ -39,7 +39,7 @@ public class DBConnector {
         }
     }
 
-    private static void closeConnection() {
+    public static void closeConnection() {
         try {
             if (currentConnection != null && !currentConnection.isClosed()) {
                 currentConnection.close();
@@ -108,6 +108,7 @@ public class DBConnector {
             try {
                 Connection connection = getConnection();
                 Statement st = connection.createStatement();
+                System.out.println("Executing Table Query: " + queryStatement);
                 rs = st.executeQuery(queryStatement);
             } catch (Exception e) {
                 e.printStackTrace();

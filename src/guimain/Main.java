@@ -1,5 +1,6 @@
 package guimain;
 
+import BeerDB.DBConnector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -63,8 +64,12 @@ public class Main extends Application {
         borderPane.setCenter(tabPane);
         root.getChildren().add(borderPane);
         window.setScene(scene);
+        window.setOnCloseRequest(e -> {
+            System.out.println("Closing DB Connection...");
+            DBConnector.closeConnection();
+        });
         window.show();
-        //end
+
 
     }
 

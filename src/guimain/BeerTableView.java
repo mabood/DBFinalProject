@@ -39,6 +39,7 @@ public class BeerTableView {
         ibuLabel = new Label("IBU:");
 
         imgLabel = new Label("loading image...");
+
         imgLabel.setVisible(false);
         imgTile = new ImageView();
         imgTile.setPreserveRatio(true);
@@ -52,28 +53,38 @@ public class BeerTableView {
         beerIbu = new Label();
         allBarsQuery = new Button("List all bars serving this beer");
 
-        beers = this.updateBeers();
         beerTable = this.CreateTableView();
         metaPane = this.buildMeta();
     }
 
     public void updateMeta(Beer selected) {
-        Image beerImg = BeerImageCache.getImage(selected.getBeerImgUrl());
-        if (beerImg == null) {
-            imgTile.setVisible(false);
-            imgLabel.setVisible(true);
+        if (selected != null) {
+            Image beerImg = BeerImageCache.getImage(selected.getBeerImgUrl());
+            if (selected.getBeerImgUrl() == null) {
+                imgTile.setVisible(false);
+                imgLabel.setText("No image");
+                imgLabel.setVisible(true);
+            }
+            else if (beerImg == null) {
+                imgTile.setVisible(false);
+                imgLabel.setText("Loading image...");
+                imgLabel.setVisible(true);
+            }
+            else {
+                imgTile.setVisible(true);
+                imgLabel.setVisible(false);
+            }
+            imgTile.setImage(beerImg);
+            beerTitle.setText(selected.getBeerName());
+            beerBrewery.setText(selected.getBreweryName());
+            beerAbv.setText(Double.toString(selected.getBeerAbv()));
+            beerIbu.setText(Integer.toString(selected.getBeerIbu()));
+
+            metaPane.setVisible(true);
         }
         else {
-            imgTile.setVisible(true);
-            imgLabel.setVisible(false);
+            metaPane.setVisible(false);
         }
-        imgTile.setImage(beerImg);
-        beerTitle.setText(selected.getBeerName());
-        beerBrewery.setText(selected.getBreweryName());
-        beerAbv.setText(Double.toString(selected.getBeerAbv()));
-        beerIbu.setText(Integer.toString(selected.getBeerIbu()));
-
-        metaPane.setVisible(true);
     }
 
     private ObservableList<Beer> updateBeers() {
@@ -82,11 +93,16 @@ public class BeerTableView {
 
     public void updateTable() {
         beers = updateBeers();
-        beerTable.setItems(BeardyBee.queryBeerTable());
+        beerTable.setItems(beers);
 
         BeerImageCache.updateBeers(beers);
+
+        if (beers.size() > 0) {
+            BeerImageCache.fetchImageTimeout(beers.get(0).getBeerImgUrl(), 1500);
+            beerTable.getSelectionModel().selectFirst();
+        }
+
         (new Thread(new BeerImageCache())).start();
-        //beerTable.getSelectionModel().selectFirst();
     }
 
     private Node buildImageContainer() {

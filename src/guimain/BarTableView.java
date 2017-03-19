@@ -43,7 +43,6 @@ public class BarTableView {
 
         allBeersQuery = new Button("List all beers served at this bar");
 
-        bars = this.updateBars();
         barsTable = this.CreateTableView();
         metaPane = this.buildMeta();
     }

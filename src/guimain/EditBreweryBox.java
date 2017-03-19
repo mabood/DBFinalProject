@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -94,7 +95,7 @@ public class EditBreweryBox {
 
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
-            if (onSubmitClick()) {
+            if (onSubmitClick(window)) {
                 window.close();
             }
         });
@@ -152,7 +153,7 @@ public class EditBreweryBox {
         return brewery;
     }
 
-    private boolean onSubmitClick() {
+    private boolean onSubmitClick(Stage window) {
         Brewery updated = validateFields();
         if (updated != null) {
             toEdit.setBreweryName(updated.getBreweryName());
@@ -161,7 +162,6 @@ public class EditBreweryBox {
 
             //BeardyBee.updateBrewery(toEdit);
             changed = true;
-            System.out.println(toEdit.toString());
             return true;
         }
         else {

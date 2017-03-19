@@ -9,21 +9,11 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 
 
-public class BreweryImageCache implements Runnable{
-    static HashMap<String, Image> images = new HashMap<>();
+public class BreweryImageCache extends ImageCache implements Runnable{
     static ObservableList<Brewery> breweries = FXCollections.observableArrayList();
 
     static void updateBreweries(ObservableList<Brewery> updatedBreweries) {
         breweries = updatedBreweries;
-    }
-
-    static Image fetchImage(String url) {
-        if (images.containsKey(url)) {
-            return images.get(url);
-        }
-        else {
-            return images.put(url, new Image(url));
-        }
     }
 
     static Image getImage(String url) {

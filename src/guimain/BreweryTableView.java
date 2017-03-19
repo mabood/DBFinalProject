@@ -51,7 +51,6 @@ public class BreweryTableView {
         allBeersQuery = new Button("List all beers from this brewery");
         editBreweryButton = new Button("Edit this brewery");
 
-        breweries = this.updateBreweries();
         breweryTable = this.CreateTableView();
         metaPane = this.buildMeta();
     }
@@ -59,8 +58,14 @@ public class BreweryTableView {
     public void updateMeta(Brewery selected) {
         if (selected != null) {
             Image breweryImg = BreweryImageCache.getImage(selected.getBreweryImgUrl());
-            if (breweryImg == null) {
+            if (selected.getBreweryImgUrl() == null) {
                 imgTile.setVisible(false);
+                imgLabel.setText("No image");
+                imgLabel.setVisible(true);
+            }
+            else if (breweryImg == null) {
+                imgTile.setVisible(false);
+                imgLabel.setText("Loading image...");
                 imgLabel.setVisible(true);
             }
             else {
@@ -91,11 +96,16 @@ public class BreweryTableView {
 
     public void updateTable() {
         breweries = updateBreweries();
-        breweryTable.setItems(BeardyBee.queryBreweryTable());
+        breweryTable.setItems(breweries);
 
         BreweryImageCache.updateBreweries(breweries);
+
+        if (breweries.size() > 0) {
+            BreweryImageCache.fetchImageTimeout(breweries.get(0).getBreweryImgUrl(), 1500);
+            breweryTable.getSelectionModel().selectFirst();
+        }
+
         (new Thread(new BreweryImageCache())).start();
-        //breweryTable.getSelectionModel().selectFirst();
     }
 
     private Node buildImageContainer() {

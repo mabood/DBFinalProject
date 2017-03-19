@@ -144,7 +144,7 @@ public class AddBarBox {
     private boolean onSubmitClick() {
         Bar toAdd = validateFields();
         if (toAdd != null) {
-            //BeardyBee.insertBrewery(toAdd);
+            BeardyBee.insertBar(toAdd);
             changed = true;
             System.out.println(toAdd.toString());
             return true;

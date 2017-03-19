@@ -74,7 +74,7 @@ public class BeardyBee {
             }
         }
         catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
 //        Beer beer1 = new Beer("Coors Light", "Coors Brewing Company", 5.5, 10);
@@ -121,7 +121,7 @@ public class BeardyBee {
             }
         }
         catch (java.sql.SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         //will query table and parse result set to populate table
 
@@ -172,7 +172,7 @@ public class BeardyBee {
             }
         }
         catch (java.sql.SQLException e) {
-
+            e.printStackTrace();
         }
 
 

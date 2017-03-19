@@ -159,7 +159,7 @@ public class AddBreweryBox {
     private boolean onSubmitClick() {
         Brewery toAdd = validateFields();
         if (toAdd != null) {
-            //BeardyBee.insertBrewery(toAdd);
+            BeardyBee.insertBrewery(toAdd);
             changed = true;
             System.out.println(toAdd.toString());
             return true;

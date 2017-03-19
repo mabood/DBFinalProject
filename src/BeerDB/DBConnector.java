@@ -83,7 +83,7 @@ public class DBConnector {
         String queryStatement = obj.generateGetTableStatement();
         ResultSet rs = null;
 
-        if (obj.generateGetTableStatement() != null) {
+        if (queryStatement != null) {
 
             try {
                 Connection connection = getConnection();
@@ -93,6 +93,9 @@ public class DBConnector {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            System.out.println("SQL Query Table statement is null");
         }
 
         return rs;

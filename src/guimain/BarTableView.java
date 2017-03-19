@@ -95,8 +95,8 @@ public class BarTableView {
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
 
-        metaPane.setMinWidth(300);
-        metaPane.setMaxWidth(300);
+        metaPane.setMinWidth(250);
+        metaPane.setMaxWidth(250);
 
         metaPane.setVisible(false);
 

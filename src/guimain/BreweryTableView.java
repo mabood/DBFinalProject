@@ -2,6 +2,7 @@ package guimain;
 
 import BeerDB.BeardyBee;
 import BeerDB.Beer;
+import BeerDB.Brewery;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -20,44 +21,37 @@ public class BreweryTableView {
     private ImageView imgTile;
     private Label imgLabel;
 
-    private Label titleLabel;
-    private Label breweryLabel;
-    private Label abvLabel;
-    private Label ibuLabel;
+    private Label nameLabel;
+    private Label locationLabel;
 
-    private Label beerTitle;
-    private Label beerBrewery;
-    private Label beerAbv;
-    private Label beerIbu;
-    private Button allBarsQuery;
-    private ObservableList<Beer> beers;
-    private TableView<Beer> beerTable;
+    private Label breweryName;
+    private Label breweryLocation;
+
+    private Button allBeersQuery;
+    private ObservableList<Brewery> breweries;
+    private TableView<Brewery> breweryTable;
 
 
     public BreweryTableView() {
-        titleLabel = new Label("Beer:");
-        breweryLabel = new Label("Brewery:");
-        abvLabel = new Label("ABV:");
-        ibuLabel = new Label("IBU:");
+        nameLabel = new Label("Brewery:");
+        locationLabel = new Label("Location:");
 
         imgLabel = new Label("loading image...");
         imgLabel.setVisible(false);
         imgTile = new ImageView();
         imgTile.setPreserveRatio(true);
         imgTile.setFitHeight(250);
-        beerTitle = new Label();
-        beerBrewery = new Label();
-        beerAbv = new Label();
-        beerIbu = new Label();
-        allBarsQuery = new Button("List all bars serving this beer");
+        breweryName = new Label();
+        breweryLocation = new Label();
+        allBeersQuery = new Button("List all bars serving this beer");
 
-        beers = this.updateBeers();
-        beerTable = this.CreateTableView();
+        breweries = this.updateBreweries();
+        breweryTable = this.CreateTableView();
     }
 
-    public void updateMeta(Beer selected) {
-        Image beerImg = BeerImageCache.getImage(selected.getBeerImgUrl());
-        if (beerImg == null) {
+    public void updateMeta(Brewery selected) {
+        Image breweryImg = BeerImageCache.getImage(selected.getBreweryImgUrl());
+        if (breweryImg == null) {
             imgTile.setVisible(false);
             imgLabel.setVisible(true);
         }
@@ -65,22 +59,20 @@ public class BreweryTableView {
             imgTile.setVisible(true);
             imgLabel.setVisible(false);
         }
-        imgTile.setImage(beerImg);
-        beerTitle.setText(selected.getBeerName());
-        beerBrewery.setText(Integer.toString(selected.getBreweryId()));
-        beerAbv.setText(Double.toString(selected.getBeerAbv()));
-        beerIbu.setText(Integer.toString(selected.getBeerIbu()));
+        imgTile.setImage(breweryImg);
+        breweryName.setText(selected.getBreweryName());
+        breweryLocation.setText(selected.getBreweryLocation());
     }
 
-    private ObservableList<Beer> updateBeers() {
-        return BeardyBee.queryBeerTable();
+    private ObservableList<Brewery> updateBreweries() {
+        return BeardyBee.queryBreweryTable();
     }
 
     public void updateTable() {
-        beers = updateBeers();
-        beerTable.setItems(BeardyBee.queryBeerTable());
+        breweries = updateBreweries();
+        breweryTable.setItems(BeardyBee.queryBreweryTable());
 
-        BeerImageCache.updateBeers(beers);
+        BreweryImageCache.updateBeers(breweries);
         (new Thread(new BeerImageCache())).start();
         //beerTable.getSelectionModel().selectFirst();
     }
@@ -105,20 +97,15 @@ public class BreweryTableView {
         metaBox.setVgap(10);
         metaBox.setHgap(10);
 
-        GridPane.setConstraints(titleLabel, 0, 0);
-        GridPane.setConstraints(beerTitle, 1, 0);
-        GridPane.setConstraints(breweryLabel, 0, 1);
-        GridPane.setConstraints(beerBrewery, 1, 1);
-        GridPane.setConstraints(abvLabel, 0, 2);
-        GridPane.setConstraints(beerAbv, 1, 2);
-        GridPane.setConstraints(ibuLabel, 0, 3);
-        GridPane.setConstraints(beerIbu, 1, 3);
+        GridPane.setConstraints(nameLabel, 0, 0);
+        GridPane.setConstraints(breweryName, 1, 0);
+        GridPane.setConstraints(locationLabel, 0, 1);
+        GridPane.setConstraints(breweryLocation, 1, 1);
 
-        metaBox.getChildren().addAll(titleLabel, beerTitle, breweryLabel, beerBrewery,
-                abvLabel, beerAbv, ibuLabel, beerIbu);
+        metaBox.getChildren().addAll(nameLabel, breweryName, locationLabel, breweryLocation);
 
         VBox beerButtons = new VBox(6);
-        beerButtons.getChildren().addAll(allBarsQuery);
+        beerButtons.getChildren().addAll(allBeersQuery);
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
@@ -131,36 +118,26 @@ public class BreweryTableView {
 
         BorderPane pane = new BorderPane();
 
-        pane.setCenter(beerTable);
+        pane.setCenter(breweryTable);
         pane.setRight(metaPane);
 
         return pane;
 
     }
 
-    private TableView<Beer> CreateTableView() {
-        TableView<Beer> table = new TableView<>();
+    private TableView<Brewery> CreateTableView() {
+        TableView<Brewery> table = new TableView<>();
 
-        TableColumn<Beer, String> beerNameColumn = new TableColumn<>("Name");
-        beerNameColumn.setMinWidth(200);
-        beerNameColumn.setCellValueFactory(new PropertyValueFactory<>("beerName"));
+        TableColumn<Brewery, String> breweryNameColumn = new TableColumn<>("Brewery");
+        breweryNameColumn.setMinWidth(200);
+        breweryNameColumn.setCellValueFactory(new PropertyValueFactory<>("breweryName"));
 
-        TableColumn<Beer, Integer> breweryColumn = new TableColumn<>("Brewery");
-        breweryColumn.setMinWidth(200);
-        breweryColumn.setCellValueFactory(new PropertyValueFactory<>("breweryId"));
+        TableColumn<Brewery, String> breweryLocationColumn = new TableColumn<>("Location");
+        breweryLocationColumn.setMinWidth(200);
+        breweryLocationColumn.setCellValueFactory(new PropertyValueFactory<>("breweryLocation"));
 
-        TableColumn<Beer, Double> beerAbvColumn = new TableColumn<>("ABV");
-        beerAbvColumn.setMinWidth(100);
-        beerAbvColumn.setCellValueFactory(new PropertyValueFactory<>("beerAbv"));
-
-        TableColumn<Beer, Integer> beerIbuColumn = new TableColumn<>("IBU");
-        beerIbuColumn.setMinWidth(100);
-        beerIbuColumn.setCellValueFactory(new PropertyValueFactory<>("beerIbu"));
-
-        table.getColumns().add(beerNameColumn);
-        table.getColumns().add(breweryColumn);
-        table.getColumns().add(beerAbvColumn);
-        table.getColumns().add(beerIbuColumn);
+        table.getColumns().add(breweryNameColumn);
+        table.getColumns().add(breweryLocationColumn);
 
         table.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
             updateMeta(newValue)

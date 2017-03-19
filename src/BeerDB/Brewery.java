@@ -66,7 +66,7 @@ public class Brewery implements SQLGenerator{
 
         if (getBreweryImgUrl() == null) {
             output = "UPDATE Brewery\nSET " +
-                    "breweryLocation = '" + getBreweryLocation() +
+                    "', breweryLocation = '" + getBreweryLocation() +
                     "'\nWHERE breweryName = '" + getBreweryName() + "'\n";
 
         }

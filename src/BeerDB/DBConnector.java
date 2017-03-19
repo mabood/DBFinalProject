@@ -64,7 +64,7 @@ public class DBConnector {
 
     // update tuple
     public static void updateTuple(SQLGenerator obj) {
-        String updateStatement = obj.generateInsertStatement();
+        String updateStatement = obj.generateUpdateStatement();
 
         if (obj.generateUpdateStatement() != null) {
             try {

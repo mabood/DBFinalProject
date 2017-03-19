@@ -78,7 +78,7 @@ public class AddBeerBox {
         layout.setVgap(10);
 
         GridPane pane = new GridPane();
-        pane.setPadding(new Insets(10, 10, 10, 10));
+        pane.setPadding(new Insets(10, 0, 10, 0));
         pane.setVgap(4);
         pane.setHgap(10);
 

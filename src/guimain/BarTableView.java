@@ -104,7 +104,20 @@ public class BarTableView {
 
     }
 
-    //private Node buildFooter() {}
+    private Node buildFooter() {
+        Button addBarButton = new Button("Add Bar");
+        addBarButton.setOnAction(e -> {
+            AddBarBox barBox = new AddBarBox();
+            barBox.display();
+        });
+
+        HBox tableButtons = new HBox(10);
+        tableButtons.getChildren().add(addBarButton);
+
+        tableButtons.setPadding(new Insets(10,10,10,10));
+
+        return tableButtons;
+    }
 
     public BorderPane CreateLayout() {
 
@@ -113,7 +126,7 @@ public class BarTableView {
 
         pane.setCenter(barsTable);
         pane.setRight(metaPane);
-        //pane.setBottom(buildFooter());
+        pane.setBottom(buildFooter());
 
         return pane;
 

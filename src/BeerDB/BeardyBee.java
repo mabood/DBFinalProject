@@ -11,6 +11,7 @@ import java.util.HashSet;
  */
 public class BeardyBee {
     static HashSet<String> breweryNames = new HashSet<>();
+    static HashSet<String> barNames = new HashSet<>();
 
     public static boolean BreweryExists(String breweryName) {
         return breweryNames.contains(breweryName);
@@ -71,6 +72,10 @@ public class BeardyBee {
 
         bars.add(bar1);
         bars.add(bar2);
+
+        barNames.add(bar1.getBarName() + bar1.getBarLocation());
+        barNames.add(bar2.getBarName() + bar2.getBarLocation());
+
 
         return bars;
     }

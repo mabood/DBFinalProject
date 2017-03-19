@@ -20,9 +20,54 @@ import javafx.stage.Stage;
 
 public class AddBeerBox {
     //Create variable
-    static Beer created;
+    private Beer created;
+    private Label beerNameLabel;
+    private Label beerNameError;
+    private Label breweryNameLabel;
+    private Label breweryError;
+    private Label abvLabel;
+    private Label abvError;
+    private Label ibuLabel;
+    private Label ibuError;
+    private Label imgLabel;
 
-    public static boolean display() {
+    private TextField beerNameField;
+    private TextField breweryField;
+    private TextField abvField;
+    private TextField ibuField;
+    private TextField imgField;
+
+    public AddBeerBox() {
+        beerNameLabel = new Label("Beer Name:");
+        beerNameError = new Label("Beer Name left blank.");
+        beerNameError.setVisible(false);
+        beerNameField = new TextField();
+        beerNameField.setMinWidth(200);
+
+        breweryNameLabel = new Label("Brewery Name: ");
+        breweryError = new Label("Brewery not found! Add it to the Breweries table.");
+        breweryError.setVisible(false);
+        breweryField = new TextField();
+        breweryField.setMinWidth(200);
+
+        abvLabel = new Label("Alcohol By Volume:");
+        abvError = new Label("ABV value must be between 0 and 100.");
+        abvError.setVisible(false);
+        abvField = new TextField();
+        abvField.setMaxWidth(60);
+
+        ibuLabel = new Label("IBU score:");
+        ibuError = new Label("IBU value must be between 0 and 100.");
+        ibuError.setVisible(false);
+        ibuField = new TextField();
+        ibuField.setMaxWidth(60);
+
+        imgLabel = new Label("Beer Image URL:");
+        imgField = new TextField();
+        imgField.setMinWidth(200);
+    }
+
+    public boolean display() {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Add a Beer to the Beers table");
@@ -38,32 +83,6 @@ public class AddBeerBox {
         pane.setHgap(10);
 
         Label instructions = new Label("Enter the following Beer information:");
-
-        //Attribute labels
-        Label beerNameLabel = new Label("Beer Name:");
-        Label beerNameError = new Label("Beer Name left blank.");
-        beerNameError.setVisible(false);
-        Label breweryNameLabel = new Label("Brewery Name: ");
-        Label breweryError = new Label("Brewery not found! Add it to the Breweries table.");
-        breweryError.setVisible(false);
-        Label abvLabel = new Label("Alcohol By Volume:");
-        Label abvError = new Label("ABV value must be between 0 and 100.");
-        abvError.setVisible(false);
-        Label ibuLabel = new Label("IBU score:");
-        Label ibuError = new Label("IBU value must be between 0 and 100.");
-        ibuError.setVisible(false);
-        Label imgLabel = new Label("Beer Image URL:");
-
-        TextField beerNameField = new TextField();
-        beerNameField.setMinWidth(200);
-        TextField breweryField = new TextField();
-        breweryField.setMinWidth(200);
-        TextField abvField = new TextField();
-        abvField.setMaxWidth(60);
-        TextField ibuField = new TextField();
-        ibuField.setMaxWidth(60);
-        TextField imgField = new TextField();
-        imgField.setMinWidth(200);
 
         GridPane.setConstraints(beerNameLabel, 0, 0);
         GridPane.setConstraints(beerNameField, 1, 0);
@@ -118,5 +137,11 @@ public class AddBeerBox {
 
         //Make sure to return answer
         return true;
+    }
+
+    private boolean validate_fields() {
+        boolean validated = true;
+
+        return validated;
     }
 }

@@ -16,11 +16,6 @@ public class BeerBuzz implements SQLGenerator{
     }
 
     @Override
-    public String generateGetTupleStatement() {
-        return null;
-    }
-
-    @Override
     public String generateUpdateStatement() {
         return null;
     }

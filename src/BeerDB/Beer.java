@@ -75,11 +75,6 @@ public class Beer implements SQLGenerator{
     }
 
     @Override
-    public String generateGetTupleStatement() {
-        return null;
-    }
-
-    @Override
     public String generateUpdateStatement() {
         return null;
     }

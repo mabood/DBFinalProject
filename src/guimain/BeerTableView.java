@@ -156,6 +156,7 @@ public class BeerTableView {
     private Node buildFooter() {
         Button addBeerButton = new Button("Add Beer");
         addBeerButton.setOnAction(e -> {
+            AddBeerBox addBeer = new AddBeerBox();
             boolean result = AddBeerBox.display();
             System.out.println(result);
         });

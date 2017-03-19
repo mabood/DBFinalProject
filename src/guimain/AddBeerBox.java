@@ -39,25 +39,25 @@ public class AddBeerBox {
 
     public AddBeerBox() {
         beerNameLabel = new Label("Beer Name:");
-        beerNameError = new Label("Beer Name left blank.");
+        beerNameError = new Label("Beer Name cannot be blank!");
         beerNameError.setVisible(false);
         beerNameField = new TextField();
         beerNameField.setMinWidth(200);
 
-        breweryNameLabel = new Label("Brewery Name: ");
+        breweryNameLabel = new Label("Brewery Name:");
         breweryError = new Label("Brewery not found! Add it to the Breweries table.");
         breweryError.setVisible(false);
         breweryField = new TextField();
         breweryField.setMinWidth(200);
 
         abvLabel = new Label("Alcohol By Volume:");
-        abvError = new Label("ABV value must be between 0 and 100.");
+        abvError = new Label("ABV value must be between 0 and 100!");
         abvError.setVisible(false);
         abvField = new TextField();
         abvField.setMaxWidth(60);
 
         ibuLabel = new Label("IBU score:");
-        ibuError = new Label("IBU value must be between 0 and 100.");
+        ibuError = new Label("IBU value must be between 0 and 100!");
         ibuError.setVisible(false);
         ibuField = new TextField();
         ibuField.setMaxWidth(60);
@@ -70,7 +70,7 @@ public class AddBeerBox {
     public void display() {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Add a Beer to the Beers table");
+        window.setTitle("Add a Beer");
         window.setMinWidth(500);
 
         GridPane layout = new GridPane();
@@ -165,6 +165,7 @@ public class AddBeerBox {
 
         try {
             abv = Double.parseDouble(abvField.getCharacters().toString());
+            abvError.setVisible(false);
         }
         catch (Exception e) {
             abvError.setVisible(true);
@@ -173,6 +174,7 @@ public class AddBeerBox {
 
         try {
             ibu = Integer.parseInt(ibuField.getCharacters().toString());
+            ibuError.setVisible(false);
         }
         catch (Exception e) {
             ibuError.setVisible(true);

@@ -141,9 +141,20 @@ public class BreweryTableView {
 
     }
 
-//    private Node buildFooter() {
-//
-//    }
+    private Node buildFooter() {
+        Button addBreweryButton = new Button("Add Brewery");
+        addBreweryButton.setOnAction(e -> {
+            AddBreweryBox addBrewery = new AddBreweryBox();
+            addBrewery.display();
+        });
+
+        HBox tableButtons = new HBox(10);
+        tableButtons.getChildren().add(addBreweryButton);
+
+        tableButtons.setPadding(new Insets(10,10,10,10));
+
+        return tableButtons;
+    }
 
     public BorderPane CreateLayout() {
 
@@ -152,7 +163,7 @@ public class BreweryTableView {
 
         pane.setCenter(breweryTable);
         pane.setRight(metaPane);
-        //pane.setBottom(buildFooter());
+        pane.setBottom(buildFooter());
 
         return pane;
 

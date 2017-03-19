@@ -37,19 +37,24 @@ public class Bar implements SQLGenerator{
 
     @Override
     public String generateInsertStatement() {
-        return null;
+        return "INSERT INTO Bar (barName, barLocation)\n" +
+                "VALUES ('" + getBarName() + "', '" +
+                getBarLocation() + "');\n";
     }
 
     @Override
     public String generateGetTableStatement() {
-        return null;
+        return "SELECT * FROM Bar";
     }
 
     @Override
     public String generateUpdateStatement() {
-        return null;
+        return "UPDATE Bar\nSET barName = '" + getBarName() + "', barLocation " +
+                "= '" + getBarLocation() + "'\nWHERE barID = '" +
+                getBarId() + "'\n";
     }
 
+    // don't care about
     @Override
     public String generateRemoveStatement() {
         return null;

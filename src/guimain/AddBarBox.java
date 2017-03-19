@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 public class AddBarBox {
     private Label barNameLabel;
     private Label barBlankError;
+    private Label barExistsError;
     private Label locationLabel;
     private Label locationError;
 
@@ -27,7 +28,9 @@ public class AddBarBox {
     public AddBarBox() {
         barNameLabel = new Label("Bar Name:");
         barBlankError = new Label("Bar name cannot be blank!");
+        barExistsError = new Label("Bar already exists!");
         barBlankError.setVisible(false);
+        barExistsError.setVisible(false);
         barNameField = new TextField();
         barNameField.setMinWidth(200);
 
@@ -58,12 +61,13 @@ public class AddBarBox {
         GridPane.setConstraints(barNameLabel, 0, 0);
         GridPane.setConstraints(barNameField, 1, 0);
         GridPane.setConstraints(barBlankError, 1, 1);
+        GridPane.setConstraints(barExistsError, 1, 1);
         GridPane.setConstraints(locationLabel, 0, 2);
         GridPane.setConstraints(locationField, 1, 2);
         GridPane.setConstraints(locationError, 1, 3);
 
         pane.getChildren().addAll(
-                barNameLabel, barNameField, barBlankError,
+                barNameLabel, barNameField, barBlankError, barExistsError,
                 locationLabel, locationField, locationError);
 
         pane.setAlignment(Pos.CENTER);
@@ -107,8 +111,15 @@ public class AddBarBox {
         if (barName.length() == 0) {
             validated = false;
             barBlankError.setVisible(true);
+            barExistsError.setVisible(false);
+        }
+        else if (BeardyBee.barExists(barName + location)) {
+            validated = false;
+            barBlankError.setVisible(false);
+            barExistsError.setVisible(true);
         }
         else {
+            barBlankError.setVisible(true);
             barBlankError.setVisible(false);
         }
 

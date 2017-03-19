@@ -13,8 +13,12 @@ public class BeardyBee {
     static HashSet<String> breweryNames = new HashSet<>();
     static HashSet<String> barNames = new HashSet<>();
 
-    public static boolean BreweryExists(String breweryName) {
+    public static boolean breweryExists(String breweryName) {
         return breweryNames.contains(breweryName);
+    }
+
+    public static boolean barExists(String barNamePlusLocation) {
+        return barNames.contains(barNamePlusLocation);
     }
 
     public static ObservableList<Beer> queryBeerTable() {

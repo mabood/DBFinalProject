@@ -2,13 +2,13 @@ package BeerDB;
 
 import java.sql.*;
 import com.mysql.jdbc.Driver;
+import guimain.AlertBox;
 
 public class DBConnector {
 
     private static Connection getConnection() {
 
         Connection connect;
-
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -25,7 +25,7 @@ public class DBConnector {
             e.printStackTrace();
             System.out.println("Connection Failed :(");
 
-            // call error box method
+            AlertBox.display("Database Connection Error", "Database is unreachable.");
 
             return null;
         }

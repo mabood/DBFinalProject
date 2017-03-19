@@ -84,7 +84,7 @@ public class Beer implements SQLGenerator{
 
     @Override
     public String generateGetTableStatement() {
-        return "SELECT * FROM BEER\nORDER BY beerName;\n";
+        return "SELECT * FROM Beer\nORDER BY beerName;\n";
     }
 
     @Override

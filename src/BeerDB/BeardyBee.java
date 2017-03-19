@@ -56,7 +56,7 @@ public class BeardyBee {
         //will query beer table and parse result set to populate beers list
 
         try {
-            while (beerTuples.next()) {
+            while (!beerTuples.isClosed()) {
                 beerId = beerTuples.getInt(currentColumn++);
                 beerName = beerTuples.getString(currentColumn++);
                 breweryName = beerTuples.getString(currentColumn++);
@@ -70,6 +70,7 @@ public class BeardyBee {
 
                 beers.add(insertingBeer);
 
+                beerTuples.next();
                 currentColumn = 0;
             }
         }
@@ -105,7 +106,7 @@ public class BeardyBee {
         String breweryImgUrl;
 
         try {
-            while (breweryTuples.next()) {
+            while (!breweryTuples.isClosed()) {
                 breweryName = breweryTuples.getString(currentColumn++);
                 breweryLocation = breweryTuples.getString(currentColumn++);
                 breweryImgUrl = breweryTuples.getString(currentColumn++);
@@ -117,6 +118,7 @@ public class BeardyBee {
 
                 breweryNames.add(breweryName);
 
+                breweryTuples.next();
                 currentColumn = 0;
             }
         }
@@ -156,7 +158,7 @@ public class BeardyBee {
         String barLocation;
 
         try {
-            while (barTuples.next()) {
+            while (!barTuples.isClosed()) {
                 barId = barTuples.getInt(currentColumn++);
                 barName = barTuples.getString(currentColumn++);
                 barLocation = barTuples.getString(currentColumn++);
@@ -168,6 +170,7 @@ public class BeardyBee {
 
                 barNames.add(barName + barLocation);
 
+                barTuples.next();
                 currentColumn = 0;
             }
         }

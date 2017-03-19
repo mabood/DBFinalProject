@@ -40,8 +40,12 @@ public class BreweryTableView {
         imgTile = new ImageView();
         imgTile.setPreserveRatio(true);
         imgTile.setFitHeight(250);
+
         breweryName = new Label();
+        breweryName.setWrapText(true);
         breweryLocation = new Label();
+        breweryLocation.setWrapText(true);
+
         allBeersQuery = new Button("List all beers that this brewery makes");
 
         breweries = this.updateBreweries();
@@ -134,6 +138,9 @@ public class BreweryTableView {
         metaPane.setBottom(breweryButtons);
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
+
+        metaPane.setMinWidth(300);
+        metaPane.setMaxWidth(300);
 
         metaPane.setVisible(false);
 

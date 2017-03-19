@@ -37,7 +37,9 @@ public class BarTableView {
         locationLabel = new Label("Location:");
 
         barName = new Label();
+        barName.setWrapText(true);
         barLocation = new Label();
+        barLocation.setWrapText(true);
 
         allBeersQuery = new Button("List all beers serving that this bar serves");
 
@@ -92,6 +94,9 @@ public class BarTableView {
         metaPane.setBottom(barButtons);
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
+
+        metaPane.setMinWidth(300);
+        metaPane.setMaxWidth(300);
 
         metaPane.setVisible(false);
 

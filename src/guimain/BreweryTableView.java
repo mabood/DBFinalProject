@@ -46,7 +46,7 @@ public class BreweryTableView {
         breweryLocation = new Label();
         breweryLocation.setWrapText(true);
 
-        allBeersQuery = new Button("List all beers that this brewery makes");
+        allBeersQuery = new Button("List all beers from this brewery");
 
         breweries = this.updateBreweries();
         breweryTable = this.CreateTableView();

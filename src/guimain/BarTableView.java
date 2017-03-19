@@ -41,7 +41,7 @@ public class BarTableView {
         barLocation = new Label();
         barLocation.setWrapText(true);
 
-        allBeersQuery = new Button("List all beers serving that this bar serves");
+        allBeersQuery = new Button("List all beers served at this bar");
 
         bars = this.updateBars();
         barsTable = this.CreateTableView();

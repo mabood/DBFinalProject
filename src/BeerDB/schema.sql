@@ -7,7 +7,8 @@ CREATE TABLE Beer (beerID INT PRIMARY KEY AUTO_INCREMENT,
                    breweryName VARCHAR(100),
                    beerABV REAL,
                    beerIBU INT,
-                   FOREIGN KEY (breweryName) REFERENCES Brewery(breweryName));
+                   imgURL VARCHAR(300),
+  FOREIGN KEY (breweryName) REFERENCES Brewery(breweryName));
 
 CREATE TABLE Bar (barID INT PRIMARY KEY AUTO_INCREMENT,
                   barName VARCHAR(100),

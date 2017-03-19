@@ -44,7 +44,7 @@ public class Bar implements SQLGenerator{
 
     @Override
     public String generateGetTableStatement() {
-        return "SELECT * FROM Bar";
+        return "SELECT * FROM Bar\nORDER BY barName;\n";
     }
 
     @Override

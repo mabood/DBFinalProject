@@ -65,21 +65,48 @@ public class Beer implements SQLGenerator{
 
     @Override
     public String generateInsertStatement() {
-        return null;
+        String output;
+
+        if (getBeerImgUrl() == null) {
+            output = "INSERT INTO Beer (beerName, breweryName, beerABV, beerIBU)\n" +
+                    "VALUES ('" + getBeerName() + "', '" + getBreweryName() +
+                    "', " + getBeerAbv() + ", " + getBeerIbu() + ");\n";
+        }
+        else {
+            output = "INSERT INTO Beer (beerName, breweryName, beerABV, beerIBU," +
+                    " imgURL)\n" + "VALUES ('" + getBeerName() + "', '"
+                    + getBreweryName() + "', " + getBeerAbv() + ", "
+                    + getBeerIbu() + ", '" + getBeerImgUrl() + "');\n";
+        }
+
+        return output;
     }
 
     @Override
     public String generateGetTableStatement() {
-        return null;
+        return "SELECT * FROM BEER\nORDER BY beerName;\n";
     }
 
     @Override
     public String generateUpdateStatement() {
-        return null;
+        String output;
+
+        if (getBeerImgUrl() == null) {
+            output = "UPDATE Beer\nSET beerName = '" + getBeerName() + "', beerABV = " +
+                    getBeerAbv() + ", beerIBU = " + getBeerIbu() + "\nWHERE beerID = " +
+                    getBeerId() + ";\n";
+        }
+        else {
+            output = "UPDATE Beer\nSET beerName = '" + getBeerName() + "', beerABV = " +
+                    getBeerAbv() + ", beerIBU = " + getBeerIbu() + ", imgURL = '" +
+                    getBeerImgUrl() + "'\nWHERE beerID = " + getBeerId() + ";\n";
+        }
+
+        return output;
     }
 
     @Override
     public String generateRemoveStatement() {
-        return null;
+        return "DELETE FROM Beer\nWHERE beerID = " + getBeerId() + ";\n";
     }
 }

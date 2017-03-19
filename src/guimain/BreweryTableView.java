@@ -57,24 +57,32 @@ public class BreweryTableView {
     }
 
     public void updateMeta(Brewery selected) {
-        Image breweryImg = BreweryImageCache.getImage(selected.getBreweryImgUrl());
-        if (breweryImg == null) {
-            imgTile.setVisible(false);
-            imgLabel.setVisible(true);
+        if (selected != null) {
+            Image breweryImg = BreweryImageCache.getImage(selected.getBreweryImgUrl());
+            if (breweryImg == null) {
+                imgTile.setVisible(false);
+                imgLabel.setVisible(true);
+            }
+            else {
+                imgTile.setVisible(true);
+                imgLabel.setVisible(false);
+            }
+            imgTile.setImage(breweryImg);
+            breweryName.setText(selected.getBreweryName());
+            breweryLocation.setText(selected.getBreweryLocation());
+            editBreweryButton.setOnAction(e -> {
+                EditBreweryBox editBox = new EditBreweryBox(selected);
+                editBox.display();
+                if (editBox.changesMade()) {
+                    updateTable();
+                }
+            });
+
+            metaPane.setVisible(true);
         }
         else {
-            imgTile.setVisible(true);
-            imgLabel.setVisible(false);
+            metaPane.setVisible(false);
         }
-        imgTile.setImage(breweryImg);
-        breweryName.setText(selected.getBreweryName());
-        breweryLocation.setText(selected.getBreweryLocation());
-        editBreweryButton.setOnAction(e -> {
-            EditBreweryBox editBox = new EditBreweryBox(selected);
-            editBox.display();
-        });
-
-        metaPane.setVisible(true);
     }
 
     private ObservableList<Brewery> updateBreweries() {
@@ -87,7 +95,7 @@ public class BreweryTableView {
 
         BreweryImageCache.updateBreweries(breweries);
         (new Thread(new BreweryImageCache())).start();
-        //beerTable.getSelectionModel().selectFirst();
+        //breweryTable.getSelectionModel().selectFirst();
     }
 
     private Node buildImageContainer() {
@@ -133,7 +141,7 @@ public class BreweryTableView {
         metaBox.getChildren().addAll(nameLabel, breweryName, locationLabel, breweryLocation);
 
         VBox breweryButtons = new VBox(6);
-        breweryButtons.getChildren().addAll(allBeersQuery);
+        breweryButtons.getChildren().addAll(editBreweryButton, allBeersQuery);
         breweryButtons.setAlignment(Pos.CENTER);
         breweryButtons.setPadding(new Insets(10, 10, 0, 10));
 

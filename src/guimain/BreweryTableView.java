@@ -5,6 +5,8 @@ import BeerDB.Beer;
 import BeerDB.Brewery;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -12,10 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class BreweryTableView {
     private ImageView imgTile;
@@ -30,7 +29,7 @@ public class BreweryTableView {
     private Button allBeersQuery;
     private ObservableList<Brewery> breweries;
     private TableView<Brewery> breweryTable;
-
+    private Node metaPane;
 
     public BreweryTableView() {
         nameLabel = new Label("Brewery:");
@@ -43,10 +42,11 @@ public class BreweryTableView {
         imgTile.setFitHeight(250);
         breweryName = new Label();
         breweryLocation = new Label();
-        allBeersQuery = new Button("List all bars serving this beer");
+        allBeersQuery = new Button("List all beers that this brewery makes");
 
         breweries = this.updateBreweries();
         breweryTable = this.CreateTableView();
+        metaPane = this.buildMeta();
     }
 
     public void updateMeta(Brewery selected) {
@@ -62,6 +62,8 @@ public class BreweryTableView {
         imgTile.setImage(breweryImg);
         breweryName.setText(selected.getBreweryName());
         breweryLocation.setText(selected.getBreweryLocation());
+
+        metaPane.setVisible(true);
     }
 
     private ObservableList<Brewery> updateBreweries() {
@@ -77,20 +79,35 @@ public class BreweryTableView {
         //beerTable.getSelectionModel().selectFirst();
     }
 
-    public BorderPane CreateLayout() {
+    private Node buildImageContainer() {
+        StackPane constrainingPane = new StackPane();
 
-        updateTable();
+        constrainingPane.setMinWidth(200);
+        constrainingPane.setMaxWidth(200);
+        constrainingPane.setMinHeight(250);
+        constrainingPane.setMaxHeight(250);
+
+        constrainingPane.getChildren().add(imgTile);
+        imgTile.fitWidthProperty().bind(constrainingPane.widthProperty());
+        constrainingPane.setAlignment(Pos.CENTER);
+
+        return constrainingPane;
+    }
+
+    private Node buildMeta() {
 
         BorderPane metaPane = new BorderPane();
 
         GridPane imgBox = new GridPane();
         imgBox.setPadding(new Insets(10,10,10,10));
 
+        Node imgContainer = buildImageContainer();
+
         GridPane.setConstraints(imgLabel, 0, 0);
-        GridPane.setConstraints(imgTile, 0, 0);
+        GridPane.setConstraints(imgContainer, 0, 0);
 
-        imgBox.getChildren().addAll(imgLabel, imgTile);
-
+        imgBox.getChildren().addAll(imgLabel, imgContainer);
+        imgBox.setAlignment(Pos.CENTER);
 
         GridPane metaBox = new GridPane();
         metaBox.setPadding(new Insets(10,10,10,10));
@@ -104,22 +121,38 @@ public class BreweryTableView {
 
         metaBox.getChildren().addAll(nameLabel, breweryName, locationLabel, breweryLocation);
 
-        VBox beerButtons = new VBox(6);
-        beerButtons.getChildren().addAll(allBeersQuery);
+        VBox breweryButtons = new VBox(6);
+        breweryButtons.getChildren().addAll(allBeersQuery);
+        breweryButtons.setAlignment(Pos.CENTER);
+        breweryButtons.setPadding(new Insets(10, 10, 0, 10));
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
 
         metaPane.setTop(imgBox);
         metaPane.setCenter(metaBox);
-        metaPane.setBottom(beerButtons);
+        metaPane.setBottom(breweryButtons);
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
 
+        metaPane.setVisible(false);
+
+        return metaPane;
+
+    }
+
+//    private Node buildFooter() {
+//
+//    }
+
+    public BorderPane CreateLayout() {
+
         BorderPane pane = new BorderPane();
+        updateTable();
 
         pane.setCenter(breweryTable);
         pane.setRight(metaPane);
+        //pane.setBottom(buildFooter());
 
         return pane;
 

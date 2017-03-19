@@ -116,7 +116,6 @@ public class BeerTableView {
         imgBox.getChildren().addAll(imgLabel, imgContainer);
         imgBox.setAlignment(Pos.CENTER);
 
-
         GridPane metaBox = new GridPane();
         metaBox.setPadding(new Insets(10,10,10,10));
         metaBox.setVgap(10);

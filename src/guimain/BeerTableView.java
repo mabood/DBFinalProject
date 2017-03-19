@@ -45,7 +45,9 @@ public class BeerTableView {
         imgTile.setFitHeight(250);
 
         beerTitle = new Label();
+        beerTitle.setWrapText(true);
         beerBrewery = new Label();
+        beerBrewery.setWrapText(true);
         beerAbv = new Label();
         beerIbu = new Label();
         allBarsQuery = new Button("List all bars serving this beer");
@@ -146,6 +148,9 @@ public class BeerTableView {
         metaPane.setBottom(beerButtons);
         metaPane.setLeft(leftMargin);
         metaPane.setRight(rightMargin);
+
+        metaPane.setMinWidth(250);
+        metaPane.setMaxWidth(250);
 
         metaPane.setVisible(false);
 

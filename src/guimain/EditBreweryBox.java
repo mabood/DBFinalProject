@@ -15,16 +15,22 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class EditBreweryBox {
+    private boolean changed;
+    private Brewery toEdit;
+
     private Label breweryNameLabel;
     private Label breweryBlankError;
     private Label locationLabel;
     private Label locationError;
+    private Label imgLabel;
 
     private TextField breweryNameField;
     private TextField locationField;
-
+    private TextField imgField;
 
     public EditBreweryBox(Brewery toEdit) {
+        this.toEdit = toEdit;
+        changed = false;
         breweryNameLabel = new Label("Brewery Name:");
         breweryBlankError = new Label("Brewery name cannot be blank!");
         breweryBlankError.setVisible(false);
@@ -38,6 +44,13 @@ public class EditBreweryBox {
         locationField = new TextField();
         locationField.setText(toEdit.getBreweryLocation());
         locationField.setMinWidth(200);
+
+        imgLabel = new Label("Brewery Image URL:");
+        imgField = new TextField();
+        if (toEdit.getBreweryImgUrl() != null) {
+            imgField.setText(toEdit.getBreweryImgUrl());
+        }
+        imgField.setMinWidth(200);
     }
 
     public void display() {
@@ -63,10 +76,13 @@ public class EditBreweryBox {
         GridPane.setConstraints(locationLabel, 0, 2);
         GridPane.setConstraints(locationField, 1, 2);
         GridPane.setConstraints(locationError, 1, 3);
+        GridPane.setConstraints(imgLabel, 0, 4);
+        GridPane.setConstraints(imgField, 1, 4);
 
         pane.getChildren().addAll(
                 breweryNameLabel, breweryNameField, breweryBlankError,
-                locationLabel, locationField, locationError);
+                locationLabel, locationField, locationError,
+                imgLabel, imgField);
 
         pane.setAlignment(Pos.CENTER);
 
@@ -104,6 +120,7 @@ public class EditBreweryBox {
         Brewery brewery = null;
         String breweryName = breweryNameField.getCharacters().toString();
         String location = locationField.getCharacters().toString();
+        String imgUrl = imgField.getCharacters().toString();
         boolean validated = true;
 
         if (breweryName.length() == 0) {
@@ -122,23 +139,37 @@ public class EditBreweryBox {
             locationError.setVisible(false);
         }
 
+        if (!imgUrl.contains("http://") && !imgUrl.contains("https://")) {
+            imgUrl = null;
+        }
+
         //after all checks, if validated then create brewery
         if (validated) {
             brewery = new Brewery(breweryName, location);
+            brewery.setBreweryImgUrl(imgUrl);
         }
 
         return brewery;
     }
 
     private boolean onSubmitClick() {
-        Brewery toUpdate = validateFields();
-        if (toUpdate != null) {
-            //BeardyBee.updateBrewery(toAdd);
-            System.out.println(toUpdate.toString());
+        Brewery updated = validateFields();
+        if (updated != null) {
+            toEdit.setBreweryName(updated.getBreweryName());
+            toEdit.setBreweryLocation(updated.getBreweryLocation());
+            toEdit.setBreweryImgUrl(updated.getBreweryImgUrl());
+
+            //BeardyBee.updateBrewery(toEdit);
+            changed = true;
+            System.out.println(toEdit.toString());
             return true;
         }
         else {
             return false;
         }
+    }
+
+    public boolean changesMade() {
+        return changed;
     }
 }

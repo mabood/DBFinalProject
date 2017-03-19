@@ -44,7 +44,7 @@ public class BeardyBee {
         ObservableList<Beer> beers = FXCollections.observableArrayList();
         Beer queryBeer = new Beer(null, null, 0, 0);
         ResultSet beerTuples = DBConnector.queryTable(queryBeer);
-        int currentColumn = 0;
+        int currentColumn = 1;
         Beer insertingBeer;
         int beerId;
         String beerName;
@@ -56,7 +56,7 @@ public class BeardyBee {
         //will query beer table and parse result set to populate beers list
 
         try {
-            while (!beerTuples.isClosed()) {
+            while (!beerTuples.isClosed() && beerTuples.next()) {
                 beerId = beerTuples.getInt(currentColumn++);
                 beerName = beerTuples.getString(currentColumn++);
                 breweryName = beerTuples.getString(currentColumn++);
@@ -70,12 +70,14 @@ public class BeardyBee {
 
                 beers.add(insertingBeer);
 
-                beerTuples.next();
-                currentColumn = 0;
+                currentColumn = 1;
             }
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        finally {
+            DBConnector.closeStatement(beerTuples);
         }
 
 //        Beer beer1 = new Beer("Coors Light", "Coors Brewing Company", 5.5, 10);
@@ -99,14 +101,14 @@ public class BeardyBee {
         ObservableList<Brewery> breweries = FXCollections.observableArrayList();
         Brewery queryBrewery = new Brewery(null, null);
         ResultSet breweryTuples = DBConnector.queryTable(queryBrewery);
-        int currentColumn = 0;
+        int currentColumn = 1;
         Brewery insertingBrewery;
         String breweryName;
         String breweryLocation;
         String breweryImgUrl;
 
         try {
-            while (!breweryTuples.isClosed()) {
+            while (!breweryTuples.isClosed() && breweryTuples.next()) {
                 breweryName = breweryTuples.getString(currentColumn++);
                 breweryLocation = breweryTuples.getString(currentColumn++);
                 breweryImgUrl = breweryTuples.getString(currentColumn++);
@@ -118,12 +120,14 @@ public class BeardyBee {
 
                 breweryNames.add(breweryName);
 
-                breweryTuples.next();
-                currentColumn = 0;
+                currentColumn = 1;
             }
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        finally {
+            DBConnector.closeStatement(breweryTuples);
         }
         //will query table and parse result set to populate table
 
@@ -151,14 +155,14 @@ public class BeardyBee {
         ObservableList<Bar> bars = FXCollections.observableArrayList();
         Bar queryBar = new Bar(null, null); //Change to static method
         ResultSet barTuples = DBConnector.queryTable(queryBar);
-        int currentColumn = 0;
+        int currentColumn = 1;
         Bar insertingBar;
         int barId;
         String barName;
         String barLocation;
 
         try {
-            while (!barTuples.isClosed()) {
+            while (!barTuples.isClosed() && barTuples.next()) {
                 barId = barTuples.getInt(currentColumn++);
                 barName = barTuples.getString(currentColumn++);
                 barLocation = barTuples.getString(currentColumn++);
@@ -170,12 +174,14 @@ public class BeardyBee {
 
                 barNames.add(barName + barLocation);
 
-                barTuples.next();
-                currentColumn = 0;
+                currentColumn = 1;
             }
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        finally {
+            DBConnector.closeStatement(barTuples);
         }
 
 

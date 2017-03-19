@@ -4,6 +4,8 @@ import java.sql.*;
 import com.mysql.jdbc.Driver;
 import guimain.AlertBox;
 
+import javax.xml.transform.Result;
+
 public class DBConnector {
     static Connection currentConnection = null;
 
@@ -45,7 +47,7 @@ public class DBConnector {
         }
         catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Connection already closed.");
+            System.out.println("Connection alreadty closed");
         }
     }
 
@@ -107,7 +109,6 @@ public class DBConnector {
                 Connection connection = getConnection();
                 Statement st = connection.createStatement();
                 rs = st.executeQuery(queryStatement);
-                st.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -117,6 +118,15 @@ public class DBConnector {
         }
 
         return rs;
+    }
+
+    public static void closeStatement(ResultSet rs) {
+        try {
+            rs.getStatement().close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

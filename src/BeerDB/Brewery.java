@@ -2,7 +2,6 @@ package BeerDB;
 
 public class Brewery implements SQLGenerator{
 
-    private int breweryId;
     private String breweryName;
     private String breweryLocation;
     private String breweryImgUrl;
@@ -10,14 +9,6 @@ public class Brewery implements SQLGenerator{
     public Brewery(String breweryName, String breweryLocation) {
         this.breweryName = breweryName;
         this.breweryLocation = breweryLocation;
-    }
-
-    public int getBreweryId() {
-        return breweryId;
-    }
-
-    public void setBreweryId(int breweryId) {
-        this.breweryId = breweryId;
     }
 
     public String getBreweryName() {
@@ -46,19 +37,39 @@ public class Brewery implements SQLGenerator{
 
     @Override
     public String generateInsertStatement() {
-        return null;
+
+        String output;
+
+        if (getBreweryImgUrl() == null) {
+            output = "INSERT INTO Brewery (name, location)\nVALUES ('" +
+                    getBreweryName() + "', '" + getBreweryLocation() + "');\n";
+        }
+        else {
+            output = "INSERT INTO Brewery (name, location, imgURL)\nVALUES ('" +
+                    getBreweryName() + "', '" + getBreweryLocation() + "', '" +
+                    getBreweryImgUrl() + "');\n";
+        }
+
+        return output;
     }
 
     @Override
     public String generateGetTableStatement() {
-        return null;
+        return "SELECT * FROM Brewery\nORDER BY name;\n";
     }
 
+
+    // won't work for god knows what fuckin reason
     @Override
     public String generateUpdateStatement() {
-        return null;
+        return "UPDATE Brewery\nSET name = '" + getBreweryName() + "', " +
+                "location = '" + getBreweryLocation() + "', imgURL = '" +
+                getBreweryImgUrl() + "'\nWHERE name = '" +
+                getBreweryName() + "';\n";
     }
 
+
+    // keep null, don't need to implement
     @Override
     public String generateRemoveStatement() {
         return null;

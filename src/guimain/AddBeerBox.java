@@ -12,7 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AddBeerBox {
-    //Create variable
+    private boolean changed;
     private Label beerNameLabel;
     private Label beerNameError;
     private Label breweryNameLabel;
@@ -30,6 +30,7 @@ public class AddBeerBox {
     private TextField imgField;
 
     public AddBeerBox() {
+        changed = true;
         beerNameLabel = new Label("Beer Name:");
         beerNameError = new Label("Beer Name cannot be blank!");
         beerNameError.setVisible(false);
@@ -191,11 +192,16 @@ public class AddBeerBox {
         Beer toAdd = validateFields();
         if (toAdd != null) {
             //BeardyBee.insertBeer(toAdd);
+            changed = true;
             System.out.println(toAdd.toString());
             return true;
         }
         else {
             return false;
         }
+    }
+
+    public boolean changesMade() {
+        return changed;
     }
 }

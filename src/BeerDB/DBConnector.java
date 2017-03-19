@@ -5,21 +5,27 @@ import com.mysql.jdbc.Driver;
 import guimain.AlertBox;
 
 public class DBConnector {
+    static Connection currentConnection = null;
 
     private static Connection getConnection() {
 
-        Connection connect;
-
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            if (currentConnection != null && !currentConnection.isClosed()) {
+                return currentConnection;
+            }
+            else {
+                Class.forName("com.mysql.jdbc.Driver");
 
-            connect = DriverManager.getConnection(
-                    "jdbc:mysql://beerdb-inst.cmkxc8yt6omz.us-west-2." +
-                            "rds.amazonaws.com:3306/Beer_Database?user=beerDB" +
-                            "&password=PEOPLEMUMBLE");
+                Connection connect;
+                connect = DriverManager.getConnection(
+                        "jdbc:mysql://beerdb-inst.cmkxc8yt6omz.us-west-2." +
+                                "rds.amazonaws.com:3306/Beer_Database?user=beerDB" +
+                                "&password=PEOPLEMUMBLE");
 
 
-            return connect;
+                return connect;
+            }
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -28,6 +34,18 @@ public class DBConnector {
             AlertBox.display("Database Connection Error", "Database is unreachable.");
 
             return null;
+        }
+    }
+
+    private static void closeConnection() {
+        try {
+            if (currentConnection != null && !currentConnection.isClosed()) {
+                currentConnection.close();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Connection already closed.");
         }
     }
 

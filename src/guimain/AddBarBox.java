@@ -146,7 +146,6 @@ public class AddBarBox {
         if (toAdd != null) {
             BeardyBee.insertBar(toAdd);
             changed = true;
-            System.out.println(toAdd.toString());
             return true;
         }
         else {

@@ -194,7 +194,6 @@ public class AddBeerBox {
         if (toAdd != null) {
             BeardyBee.insertBeer(toAdd);
             changed = true;
-            System.out.println(toAdd.toString());
             return true;
         }
         else {

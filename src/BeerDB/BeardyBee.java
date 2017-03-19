@@ -36,13 +36,13 @@ public class BeardyBee {
 
         //will query table and parse result set to populate table
 
-        Brewery brewery1 = new Brewery(1, "Firestone Walker", "Paso Robles, CA");
+        Brewery brewery1 = new Brewery("Firestone Walker", "Paso Robles, CA");
         brewery1.setBreweryImgUrl("http://brewbound.s3.amazonaws.com/BreweryLogos/Standard/219690562.fwbc.logo.png");
 
-        Brewery brewery2 = new Brewery(2, "BarrelHouse", "Paso Robles, CA");
-        brewery2.setBreweryImgUrl("https://www.craftbrewingbusiness.com/wp-content/uploads/2015/01/Barrelhouse-Brewing-logo.jpg");
+        Brewery brewery2 = new Brewery("BarrelHouse", "Paso Robles, CA");
+        brewery2.setBreweryImgUrl("http://brewbound-images.s3.amazonaws.com/wp-content/uploads/2015/01/barrelhouse-brew.png");
 
-        Brewery brewery3 = new Brewery(3, "Anheuser-Busch", "St. Louis, MO");
+        Brewery brewery3 = new Brewery("Anheuser-Busch", "St. Louis, MO");
         brewery3.setBreweryImgUrl("https://pbs.twimg.com/profile_images/656966309498847232/b-a0OfKt.png");
 
         breweries.add(brewery1);

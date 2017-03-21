@@ -38,6 +38,13 @@ public class BeardyBee {
         DBConnector.insertTuple(addingBar);
     }
 
+    public static void insertInventory(Beer addingBeer, Bar addingBar) {
+        Inventory inv = new Inventory(addingBeer.getBeerId(),
+                addingBar.getBarId());
+
+        DBConnector.insertTuple(inv);
+    }
+
     public static ObservableList<Beer> queryBeersFromBar(Bar bar) {
         ObservableList<Beer> beers = FXCollections.observableArrayList();
         String query = "SELECT beerID\nFROM Inventory\nWHERE barID = " +

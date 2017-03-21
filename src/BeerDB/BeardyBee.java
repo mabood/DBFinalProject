@@ -200,4 +200,22 @@ public class BeardyBee {
         return bars;
     }
 
+    public static void removeBeer(Beer removeBeer) {
+
+        DBConnector.removeTuple(removeBeer);
+
+    }
+
+    public static void removeBrewery(Brewery removeBrewery) {
+
+        DBConnector.removeTuple(removeBrewery);
+
+    }
+
+    public static void removeBar(Bar removeBar) {
+
+        DBConnector.removeTuple(removeBar);
+
+    }
+
 }

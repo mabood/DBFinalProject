@@ -54,9 +54,8 @@ public class Bar implements SQLGenerator{
                 getBarId() + "'\n";
     }
 
-    // don't care about
     @Override
     public String generateRemoveStatement() {
-        return null;
+        return "DELETE FROM Bar\nWHERE barID = " + getBarId() + ";\n";
     }
 }

@@ -26,7 +26,7 @@ public class BeerImageCache extends ImageCache implements Runnable {
     @Override
     public void run() {
         for (Beer br : beers) {
-            if (br.getBeerImgUrl() != null && !images.containsKey(br.getBeerImgUrl())) {
+            if (isValidUrl(br.getBeerImgUrl()) && !images.containsKey(br.getBeerImgUrl())) {
                 images.put(br.getBeerImgUrl(), new Image(br.getBeerImgUrl()));
             }
         }

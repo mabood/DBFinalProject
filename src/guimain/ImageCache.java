@@ -46,4 +46,11 @@ public class ImageCache {
             return null;
         }
     }
+
+    static boolean isValidUrl(String url) {
+        if (url == null || !url.contains("http://") && !url.contains("https://")) {
+            return false;
+        }
+        return true;
+    }
 }

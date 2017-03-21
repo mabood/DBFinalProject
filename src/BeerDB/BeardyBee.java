@@ -23,6 +23,10 @@ public class BeardyBee {
         return barMap.containsKey(barID);
     }
 
+    public static HashSet<String> getBreweryNames() {
+        return breweryNames;
+    }
+
     public static void insertBeer(Beer addingBeer) {
 
         DBConnector.insertTuple(addingBeer);

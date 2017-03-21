@@ -2,6 +2,9 @@ package guimain;
 
 import BeerDB.BeardyBee;
 import BeerDB.Beer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -42,7 +45,7 @@ public class AddBeerBox {
         breweryNameLabel = new Label("Brewery Name:");
         breweryError = new Label("Brewery cannot be blank!");
         breweryError.setVisible(false);
-        breweryDropdown = new ComboBox<>();
+        breweryDropdown = new ComboBox<>(buildDropdown());
         breweryDropdown.setMinWidth(200);
 
         abvLabel = new Label("Alcohol By Volume:");
@@ -60,6 +63,14 @@ public class AddBeerBox {
         imgLabel = new Label("Beer Image URL:");
         imgField = new TextField();
         imgField.setMinWidth(200);
+    }
+
+    public ObservableList<String> buildDropdown() {
+        ObservableList<String> options = FXCollections.observableArrayList();
+        for (String name : BeardyBee.getBreweryNames()) {
+            options.add(name);
+        }
+        return options;
     }
 
     public void display() {

@@ -38,10 +38,10 @@ public class BeardyBee {
         DBConnector.insertTuple(addingBar);
     }
 
-    public static ObservableList<Beer> queryBeerFromBar(Beer beer) {
+    public static ObservableList<Beer> queryBeersFromBar(Bar bar) {
         ObservableList<Beer> beers = FXCollections.observableArrayList();
         String query = "SELECT beerID\nFROM Inventory\nWHERE barID = " +
-                beer.getBeerId() + ";\n";
+                bar.getBarId() + ";\n";
         ResultSet beerTuples = DBConnector.queryTable(query);
         int currentColumn = 1;
         int beerID;
@@ -62,10 +62,10 @@ public class BeardyBee {
         return beers;
     }
 
-    public static ObservableList<Bar> queryBarFromBeer(Bar bar) {
+    public static ObservableList<Bar> queryBarsFromBeer(Beer beer) {
         ObservableList<Bar> bars = FXCollections.observableArrayList();
         String query = "SELECT barID\nFROM Inventory\nWHERE beerID = " +
-                bar.getBarId() + ";\n";
+                beer.getBeerId() + ";\n";
         ResultSet barTuples = DBConnector.queryTable(query);
         int currentColumn = 1;
         int barID;
@@ -86,7 +86,7 @@ public class BeardyBee {
         return bars;
     }
 
-    public static ObservableList<Beer> queryBeerFromBrewery(Brewery brewery) {
+    public static ObservableList<Beer> queryBeersFromBrewery(Brewery brewery) {
         ObservableList<Beer> beers = FXCollections.observableArrayList();
         String query = "SELECT beerID\nFROM Beer\nWHERE breweryName = " +
                 brewery.getBreweryName() + ";\n";

@@ -29,9 +29,8 @@ CREATE TABLE Inventory (
     ON DELETE CASCADE);
 
 CREATE TABLE BeerBuzz (
-    commentID INT PRIMARY KEY AUTO_INCREMENT,
+    ratingID INT PRIMARY KEY AUTO_INCREMENT,
     beerID INT,
     rating INT,
-    comment VARCHAR(200),
     FOREIGN KEY (beerID) REFERENCES Beer(beerID)
     ON DELETE CASCADE);

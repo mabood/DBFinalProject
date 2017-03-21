@@ -1,6 +1,9 @@
 package guimain;
 
+import BeerDB.Bar;
+import BeerDB.BeardyBee;
 import BeerDB.Beer;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -77,7 +80,12 @@ public class BeerMeta extends GenericMeta<Beer> {
     }
 
     private void updateButtons(Beer selected, GenericTableView parentPage) {
-
+        allBarsQuery.setOnAction(e -> {
+            ObservableList<Bar> result = BeardyBee.queryBarsFromBeer(selected);
+            BarQueryTableView beerQTable = new BarQueryTableView(result);
+            int index = TabManager.addTab("Bars that serve " + selected.getBeerName(), beerQTable, true);
+            TabManager.setActiveTab(index);
+        });
     }
 
     private Node buildImg() {

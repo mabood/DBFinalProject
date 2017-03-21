@@ -27,6 +27,7 @@ abstract class GenericTableView<T> {
     public void updateTable() {
         items = updateItems();
         itemTable.setItems(items);
+        itemTable.getSelectionModel().selectFirst();
     }
 
     public Node buildFooter() {

@@ -160,7 +160,7 @@ public class EditBreweryBox {
             toEdit.setBreweryLocation(updated.getBreweryLocation());
             toEdit.setBreweryImgUrl(updated.getBreweryImgUrl());
 
-            //BeardyBee.updateBrewery(toEdit);
+            BeardyBee.updateBrewery(toEdit);
             changed = true;
             return true;
         }

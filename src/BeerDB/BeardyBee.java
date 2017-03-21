@@ -62,6 +62,9 @@ public class BeardyBee {
         catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException n) {
+            System.out.println("Attempt to query table found. check that table exists in DB.");
+        }
         finally {
             DBConnector.closeStatement(beerTuples);
         }
@@ -86,6 +89,9 @@ public class BeardyBee {
         catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException n) {
+            System.out.println("Attempt to query table found. check that table exists in DB.");
+        }
         finally {
             DBConnector.closeStatement(barTuples);
         }
@@ -109,6 +115,9 @@ public class BeardyBee {
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        catch (NullPointerException n) {
+            System.out.println("Attempt to query table found. check that table exists in DB.");
         }
         finally {
             DBConnector.closeStatement(beerTuples);
@@ -154,6 +163,9 @@ public class BeardyBee {
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        catch (NullPointerException n) {
+            System.out.println("Beer table not defined.");
         }
         finally {
             DBConnector.closeStatement(beerTuples);
@@ -204,6 +216,9 @@ public class BeardyBee {
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        catch (NullPointerException n) {
+            System.out.println("Brewery table not defined.");
         }
         finally {
             DBConnector.closeStatement(breweryTuples);
@@ -257,6 +272,9 @@ public class BeardyBee {
         }
         catch (java.sql.SQLException e) {
             e.printStackTrace();
+        }
+        catch (NullPointerException n) {
+            System.out.println("Bar table not defined.");
         }
         finally {
             DBConnector.closeStatement(barTuples);

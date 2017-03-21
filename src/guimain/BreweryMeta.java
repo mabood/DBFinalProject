@@ -80,10 +80,22 @@ public class BreweryMeta extends GenericMeta<Brewery> {
             }
         });
         allBeersQuery.setOnAction(e -> {
+            String tabTitle = "";
             ObservableList<Beer> result = BeardyBee.queryBeersFromBrewery(selected);
             BeerQueryTableView beerQTable = new BeerQueryTableView(result);
-            int index = TabManager.addTab(result.size() + " Beers Brewed by " + selected.getBreweryName(), beerQTable, true);
-            TabManager.setActiveTab(index);
+            if (result.isEmpty()) {
+                AlertBox.display("No Beers Found", "There are currently no beers brewed at " + selected.getBreweryName());
+            }
+            else {
+                if (result.size() == 1) {
+                    tabTitle = "1 Beer Brewed by ";
+                }
+                else {
+                    tabTitle = result.size() + " Beers Brewed by ";
+                }
+                int index = TabManager.addTab(tabTitle + selected.getBreweryName(), beerQTable, true);
+                TabManager.setActiveTab(index);
+            }
         });
     }
 

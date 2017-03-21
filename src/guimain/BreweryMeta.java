@@ -1,6 +1,9 @@
 package guimain;
 
+import BeerDB.BeardyBee;
+import BeerDB.Beer;
 import BeerDB.Brewery;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -75,6 +78,12 @@ public class BreweryMeta extends GenericMeta<Brewery> {
             if (editBox.changesMade()) {
                 parentPage.updateTable();
             }
+        });
+        allBeersQuery.setOnAction(e -> {
+            ObservableList<Beer> result = BeardyBee.queryBeersFromBrewery(selected);
+            BeerQueryTableView beerQTable = new BeerQueryTableView(result);
+            int index = TabManager.addTab("Brewed by " + selected.getBreweryName(), beerQTable, true);
+            TabManager.setActiveTab(index);
         });
     }
 

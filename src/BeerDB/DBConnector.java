@@ -47,7 +47,7 @@ public class DBConnector {
         }
         catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Connection alreadty closed");
+            System.out.println("Connection already closed");
         }
     }
 
@@ -108,7 +108,7 @@ public class DBConnector {
             try {
                 Connection connection = getConnection();
                 Statement st = connection.createStatement();
-                System.out.println("Executing Table Query: " + queryStatement);
+                System.out.println("Executing Table Query: \n" + queryStatement);
                 rs = st.executeQuery(queryStatement);
             } catch (Exception e) {
                 e.printStackTrace();

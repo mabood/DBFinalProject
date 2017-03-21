@@ -95,8 +95,8 @@ public class BeardyBee {
 
     public static ObservableList<Beer> queryBeersFromBrewery(Brewery brewery) {
         ObservableList<Beer> beers = FXCollections.observableArrayList();
-        String query = "SELECT beerID\nFROM Beer\nWHERE breweryName = " +
-                brewery.getBreweryName() + ";\n";
+        String query = "SELECT beerID\nFROM Beer\nWHERE breweryName = '" +
+                brewery.getBreweryName() + "';\n";
         ResultSet beerTuples = DBConnector.queryTable(query);
         int currentColumn = 1;
         int beerID;

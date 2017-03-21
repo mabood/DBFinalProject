@@ -294,4 +294,22 @@ public class BeardyBee {
         DBConnector.removeTuple(removeBar);
     }
 
+    public static void updateBeer(Beer updatedBeer) {
+
+        DBConnector.updateTuple(updatedBeer);
+
+    }
+
+    public static void updateBrewery(Brewery updatedBrewery) {
+
+        DBConnector.updateTuple(updatedBrewery);
+
+    }
+
+    public static void updateBar(Bar updatedBar) {
+
+        DBConnector.updateTuple(updatedBar);
+
+    }
+
 }

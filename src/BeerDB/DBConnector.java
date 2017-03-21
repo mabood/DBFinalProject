@@ -121,6 +121,30 @@ public class DBConnector {
         return rs;
     }
 
+    // query table just with string
+    public static ResultSet queryTable(String sqlQuery) {
+        String queryStatement = sqlQuery;
+        ResultSet rs = null;
+
+        if (queryStatement != null) {
+
+            try {
+                Connection connection = getConnection();
+                Statement st = connection.createStatement();
+                System.out.println("Executing Table Query: " + queryStatement);
+                rs = st.executeQuery(queryStatement);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("SQL Query Table statement is null");
+        }
+
+        return rs;
+    }
+
+
     public static void closeStatement(ResultSet rs) {
         try {
             rs.getStatement().close();

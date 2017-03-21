@@ -5,8 +5,10 @@ public class Brewery implements SQLGenerator{
     private String breweryName;
     private String breweryLocation;
     private String breweryImgUrl;
+    private String formerBreweryName;
 
     public Brewery(String breweryName, String breweryLocation) {
+        this.formerBreweryName = breweryName;
         this.breweryName = breweryName;
         this.breweryLocation = breweryLocation;
     }
@@ -32,6 +34,13 @@ public class Brewery implements SQLGenerator{
     }
 
     public void setBreweryImgUrl(String breweryImgUrl) {
+        this.breweryImgUrl = breweryImgUrl;
+    }
+
+    public void updateFields(String breweryName, String breweryLocation, String breweryImgUrl) {
+        formerBreweryName = this.breweryName;
+        this.breweryName = breweryName;
+        this.breweryLocation = breweryLocation;
         this.breweryImgUrl = breweryImgUrl;
     }
 

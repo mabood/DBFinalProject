@@ -80,10 +80,9 @@ public class Brewery implements SQLGenerator{
         return output;
     }
 
-
-    // keep null, don't need to implement
     @Override
     public String generateRemoveStatement() {
-        return null;
+        return "DELETE FROM Brewery\nWHERE breweryName = " + getBreweryName() +
+                ";\n";
     }
 }

@@ -19,26 +19,95 @@ public class BeardyBee {
         return breweryNames.contains(breweryName);
     }
 
-    public static boolean barExists(String barNamePlusLocation) {
-        return barMap.containsValue(barNamePlusLocation);
+    public static boolean barExists(int barID) {
+        return barMap.containsKey(barID);
     }
 
     public static void insertBeer(Beer addingBeer) {
 
         DBConnector.insertTuple(addingBeer);
-
     }
 
     public static void insertBrewery(Brewery addingBrewery) {
 
         DBConnector.insertTuple(addingBrewery);
-
     }
 
     public static void insertBar(Bar addingBar) {
 
         DBConnector.insertTuple(addingBar);
+    }
 
+    public static ObservableList<Beer> queryBeerFromBar(Beer beer) {
+        ObservableList<Beer> beers = FXCollections.observableArrayList();
+        String query = "SELECT beerID\nFROM Inventory\nWHERE barID = " +
+                beer.getBeerId() + ";\n";
+        ResultSet beerTuples = DBConnector.queryTable(query);
+        int currentColumn = 1;
+        int beerID;
+
+        try {
+            while (!beerTuples.isClosed() && beerTuples.next()) {
+                beerID = beerTuples.getInt(currentColumn);
+                beers.add(beerMap.get(beerID));
+            }
+        }
+        catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            DBConnector.closeStatement(beerTuples);
+        }
+
+        return beers;
+    }
+
+    public static ObservableList<Bar> queryBarFromBeer(Bar bar) {
+        ObservableList<Bar> bars = FXCollections.observableArrayList();
+        String query = "SELECT barID\nFROM Inventory\nWHERE beerID = " +
+                bar.getBarId() + ";\n";
+        ResultSet barTuples = DBConnector.queryTable(query);
+        int currentColumn = 1;
+        int barID;
+
+        try {
+            while (!barTuples.isClosed() && barTuples.next()) {
+                barID = barTuples.getInt(currentColumn);
+                bars.add(barMap.get(barID));
+            }
+        }
+        catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            DBConnector.closeStatement(barTuples);
+        }
+
+        return bars;
+    }
+
+    public static ObservableList<Beer> queryBeerFromBrewery(Brewery brewery) {
+        ObservableList<Beer> beers = FXCollections.observableArrayList();
+        String query = "SELECT beerID\nFROM Beer\nWHERE breweryName = " +
+                brewery.getBreweryName() + ";\n";
+        ResultSet beerTuples = DBConnector.queryTable(query);
+        int currentColumn = 1;
+        int beerID;
+
+        try {
+            while (!beerTuples.isClosed() && beerTuples.next()) {
+                beerID = beerTuples.getInt(currentColumn);
+                beers.add(beerMap.get(beerID));
+            }
+        }
+        catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            DBConnector.closeStatement(beerTuples);
+        }
+
+        return beers;
     }
 
     public static ObservableList<Beer> queryBeerTable() {
@@ -202,20 +271,20 @@ public class BeardyBee {
 
     public static void removeBeer(Beer removeBeer) {
 
+        beerMap.remove(removeBeer.getBeerId());
         DBConnector.removeTuple(removeBeer);
-
     }
 
     public static void removeBrewery(Brewery removeBrewery) {
 
+        breweryNames.remove(removeBrewery.getBreweryName());
         DBConnector.removeTuple(removeBrewery);
-
     }
 
     public static void removeBar(Bar removeBar) {
 
+        barMap.remove(removeBar.getBarId());
         DBConnector.removeTuple(removeBar);
-
     }
 
 }

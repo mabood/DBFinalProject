@@ -1,179 +1,53 @@
 package guimain;
 
 import BeerDB.BeardyBee;
-import BeerDB.Beer;
 import BeerDB.Brewery;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-public class BreweryTableView {
-    private ImageView imgTile;
-    private Label imgLabel;
-
-    private Label nameLabel;
-    private Label locationLabel;
-
-    private Label breweryName;
-    private Label breweryLocation;
-
-    private Button allBeersQuery;
-    private Button editBreweryButton;
-
-    private ObservableList<Brewery> breweries;
-    private TableView<Brewery> breweryTable;
-    private Node metaPane;
+public class BreweryTableView extends GenericTableView<Brewery>{
 
     public BreweryTableView() {
-        nameLabel = new Label("Brewery:");
-        locationLabel = new Label("Location:");
-
-        imgLabel = new Label("loading image...");
-        imgLabel.setVisible(false);
-        imgTile = new ImageView();
-        imgTile.setPreserveRatio(true);
-        imgTile.setFitHeight(250);
-
-        breweryName = new Label();
-        breweryName.setWrapText(true);
-        breweryLocation = new Label();
-        breweryLocation.setWrapText(true);
-
-        allBeersQuery = new Button("List all beers from this brewery");
-        editBreweryButton = new Button("Edit this brewery");
-
-        breweryTable = this.CreateTableView();
-        metaPane = this.buildMeta();
+        super(true, true);
+        metaPane = new BreweryMeta(true, true);
     }
 
-    public void updateMeta(Brewery selected) {
-        if (selected != null) {
-            Image breweryImg = BreweryImageCache.getImage(selected.getBreweryImgUrl());
-            if (selected.getBreweryImgUrl() == null) {
-                imgTile.setVisible(false);
-                imgLabel.setText("No image");
-                imgLabel.setVisible(true);
-            }
-            else if (breweryImg == null) {
-                imgTile.setVisible(false);
-                imgLabel.setText("Loading image...");
-                imgLabel.setVisible(true);
-            }
-            else {
-                imgTile.setVisible(true);
-                imgLabel.setVisible(false);
-            }
-            imgTile.setImage(breweryImg);
-            breweryName.setText(selected.getBreweryName());
-            breweryLocation.setText(selected.getBreweryLocation());
-            editBreweryButton.setOnAction(e -> {
-                EditBreweryBox editBox = new EditBreweryBox(selected);
-                editBox.display();
-                if (editBox.changesMade()) {
-                    updateTable();
-                }
-            });
-
-            metaPane.setVisible(true);
-        }
-        else {
-            metaPane.setVisible(false);
-        }
+    public BreweryTableView(boolean showButtons, boolean showImages) {
+        super(showImages, showButtons);
+        metaPane = new BreweryMeta(showImages, showButtons);
     }
 
-    private ObservableList<Brewery> updateBreweries() {
+    @Override
+    public ObservableList<Brewery> updateItems() {
         return BeardyBee.queryBreweryTable();
     }
 
+    @Override
     public void updateTable() {
-        breweries = updateBreweries();
-        breweryTable.setItems(breweries);
+        items = updateItems();
+        itemTable.setItems(items);
 
-        BreweryImageCache.updateBreweries(breweries);
+        if (images) {
+            BreweryImageCache.updateBreweries(items);
 
-        if (breweries.size() > 0) {
-            BreweryImageCache.fetchImageTimeout(breweries.get(0).getBreweryImgUrl(), 1500);
-            breweryTable.getSelectionModel().selectFirst();
+            if (items.size() > 0) {
+                BreweryImageCache.fetchImageTimeout(items.get(0).getBreweryImgUrl(), 1500);
+            }
+
+            (new Thread(new BreweryImageCache())).start();
         }
 
-        (new Thread(new BreweryImageCache())).start();
+        itemTable.getSelectionModel().selectFirst();
     }
 
-    private Node buildImageContainer() {
-        StackPane constrainingPane = new StackPane();
-
-        constrainingPane.setMinWidth(200);
-        constrainingPane.setMaxWidth(200);
-        constrainingPane.setMinHeight(250);
-        constrainingPane.setMaxHeight(250);
-
-        constrainingPane.getChildren().add(imgTile);
-        imgTile.fitWidthProperty().bind(constrainingPane.widthProperty());
-        constrainingPane.setAlignment(Pos.CENTER);
-
-        return constrainingPane;
-    }
-
-    private Node buildMeta() {
-
-        BorderPane metaPane = new BorderPane();
-
-        GridPane imgBox = new GridPane();
-        imgBox.setPadding(new Insets(10,10,10,10));
-
-        Node imgContainer = buildImageContainer();
-
-        GridPane.setConstraints(imgLabel, 0, 0);
-        GridPane.setConstraints(imgContainer, 0, 0);
-
-        imgBox.getChildren().addAll(imgLabel, imgContainer);
-        imgBox.setAlignment(Pos.CENTER);
-
-        GridPane metaBox = new GridPane();
-        metaBox.setPadding(new Insets(10,10,10,10));
-        metaBox.setVgap(10);
-        metaBox.setHgap(10);
-
-        GridPane.setConstraints(nameLabel, 0, 0);
-        GridPane.setConstraints(breweryName, 1, 0);
-        GridPane.setConstraints(locationLabel, 0, 1);
-        GridPane.setConstraints(breweryLocation, 1, 1);
-
-        metaBox.getChildren().addAll(nameLabel, breweryName, locationLabel, breweryLocation);
-
-        VBox breweryButtons = new VBox(6);
-        breweryButtons.getChildren().addAll(editBreweryButton, allBeersQuery);
-        breweryButtons.setAlignment(Pos.CENTER);
-        breweryButtons.setPadding(new Insets(10, 10, 0, 10));
-
-        HBox leftMargin = new HBox(10);
-        HBox rightMargin = new HBox(10);
-
-        metaPane.setTop(imgBox);
-        metaPane.setCenter(metaBox);
-        metaPane.setBottom(breweryButtons);
-        metaPane.setLeft(leftMargin);
-        metaPane.setRight(rightMargin);
-
-        metaPane.setMinWidth(300);
-        metaPane.setMaxWidth(300);
-
-        metaPane.setVisible(false);
-
-        return metaPane;
-
-    }
-
-    private Node buildFooter() {
+    @Override
+    public Node buildFooter() {
         Button addBreweryButton = new Button("Add Brewery");
         addBreweryButton.setOnAction(e -> {
             AddBreweryBox addBrewery = new AddBreweryBox();
@@ -191,20 +65,8 @@ public class BreweryTableView {
         return tableButtons;
     }
 
-    public BorderPane CreateLayout() {
-
-        BorderPane pane = new BorderPane();
-        updateTable();
-
-        pane.setCenter(breweryTable);
-        pane.setRight(metaPane);
-        pane.setBottom(buildFooter());
-
-        return pane;
-
-    }
-
-    private TableView<Brewery> CreateTableView() {
+    @Override
+    public TableView<Brewery> CreateTableView() {
         TableView<Brewery> table = new TableView<>();
 
         TableColumn<Brewery, String> breweryNameColumn = new TableColumn<>("Brewery");
@@ -219,7 +81,7 @@ public class BreweryTableView {
         table.getColumns().add(breweryLocationColumn);
 
         table.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
-            updateMeta(newValue)
+                metaPane.refreshMeta(newValue, this)
         );
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

@@ -2,18 +2,12 @@ package guimain;
 
 import BeerDB.DBConnector;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -26,7 +20,6 @@ public class Main extends Application {
 
         window = primaryStage;
 
-        //Example
         window.setTitle("Beer DB");
         Group root = new Group();
         Scene scene = new Scene(root, 900, 600, Color.WHITE);
@@ -69,8 +62,6 @@ public class Main extends Application {
             DBConnector.closeConnection();
         });
         window.show();
-
-
     }
 
 

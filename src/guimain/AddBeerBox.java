@@ -25,8 +25,8 @@ public class AddBeerBox {
     private Label ibuError;
     private Label imgLabel;
 
+    private ComboBox<String> breweryDropdown;
     private TextField beerNameField;
-    private TextField breweryField;
     private TextField abvField;
     private TextField ibuField;
     private TextField imgField;
@@ -40,10 +40,10 @@ public class AddBeerBox {
         beerNameField.setMinWidth(200);
 
         breweryNameLabel = new Label("Brewery Name:");
-        breweryError = new Label("Brewery not found! Add it to the Breweries table.");
+        breweryError = new Label("Brewery cannot be blank!");
         breweryError.setVisible(false);
-        breweryField = new TextField();
-        breweryField.setMinWidth(200);
+        breweryDropdown = new ComboBox<>();
+        breweryDropdown.setMinWidth(200);
 
         abvLabel = new Label("Alcohol By Volume:");
         abvError = new Label("ABV value must be between 0 and 100!");
@@ -83,7 +83,7 @@ public class AddBeerBox {
         GridPane.setConstraints(beerNameField, 1, 0);
         GridPane.setConstraints(beerNameError, 1, 1);
         GridPane.setConstraints(breweryNameLabel, 0, 2);
-        GridPane.setConstraints(breweryField, 1, 2);
+        GridPane.setConstraints(breweryDropdown, 1, 2);
         GridPane.setConstraints(breweryError, 1, 3);
         GridPane.setConstraints(abvLabel, 0, 4);
         GridPane.setConstraints(abvField, 1, 4);
@@ -96,7 +96,7 @@ public class AddBeerBox {
 
         pane.getChildren().addAll(
                 beerNameLabel, beerNameField, beerNameError,
-                breweryNameLabel, breweryField, breweryError,
+                breweryNameLabel, breweryDropdown, breweryError,
                 abvLabel, abvField, abvError,
                 ibuLabel, ibuField, ibuError,
                 imgLabel, imgField);
@@ -137,7 +137,7 @@ public class AddBeerBox {
     private Beer validateFields() {
         Beer beer = null;
         String beerName = beerNameField.getCharacters().toString();
-        String breweryName = breweryField.getCharacters().toString();
+        String breweryName = breweryDropdown.getValue();
         Double abv = 0.0;
         int ibu = 0;
         String imgUrl;
@@ -151,7 +151,7 @@ public class AddBeerBox {
             beerNameError.setVisible(false);
         }
 
-        if (!BeardyBee.breweryExists(breweryName)) {
+        if (breweryName == null) {
             validated = false;
             breweryError.setVisible(true);
         }

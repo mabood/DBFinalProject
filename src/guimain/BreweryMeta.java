@@ -77,6 +77,7 @@ public class BreweryMeta extends GenericMeta<Brewery> {
             editBox.display();
             if (editBox.changesMade()) {
                 parentPage.updateTable();
+                TabManager.refreshTab(TabManager.BEERS_INDEX);
             }
         });
         allBeersQuery.setOnAction(e -> {

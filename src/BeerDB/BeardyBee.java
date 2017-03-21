@@ -5,21 +5,22 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
 import java.sql.ResultSet;
-import java.util.HashSet;
+import java.util.*;
 
 /** BeardyBee backend functionality for application
  *
  */
 public class BeardyBee {
     static HashSet<String> breweryNames = new HashSet<>();
-    static HashSet<String> barNames = new HashSet<>();
+    static HashMap<Integer, Beer> beerMap = new HashMap<>();
+    static HashMap<Integer, Bar> barMap = new HashMap<>();
 
     public static boolean breweryExists(String breweryName) {
         return breweryNames.contains(breweryName);
     }
 
     public static boolean barExists(String barNamePlusLocation) {
-        return barNames.contains(barNamePlusLocation);
+        return barMap.containsValue(barNamePlusLocation);
     }
 
     public static void insertBeer(Beer addingBeer) {
@@ -68,7 +69,9 @@ public class BeardyBee {
                 insertingBeer.setBeerId(beerId);
                 insertingBeer.setBeerImgUrl(beerImgUrl);
 
+                beerMap.put(beerId, insertingBeer);
                 beers.add(insertingBeer);
+
 
                 currentColumn = 1;
             }
@@ -170,9 +173,8 @@ public class BeardyBee {
                 insertingBar = new Bar(barName, barLocation);
                 insertingBar.setBarId(barId);
 
+                barMap.put(barId, insertingBar);
                 bars.add(insertingBar);
-
-                barNames.add(barName + barLocation);
 
                 currentColumn = 1;
             }

@@ -56,7 +56,7 @@ public class BarTableView extends GenericTableView<Bar>{
     }
 
     @Override
-    public TableView<Bar> CreateTableView() {
+    public TableView<Bar> buildTable() {
         TableView<Bar> table = new TableView<>();
 
         TableColumn<Bar, String> barNameColumn = new TableColumn<>("Name");
@@ -69,12 +69,6 @@ public class BarTableView extends GenericTableView<Bar>{
 
         table.getColumns().add(barNameColumn);
         table.getColumns().add(barLocationColumn);
-
-        table.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
-            metaPane.refreshMeta(newValue, this)
-        );
-
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return table;
     }

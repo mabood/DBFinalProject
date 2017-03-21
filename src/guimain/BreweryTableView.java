@@ -66,7 +66,7 @@ public class BreweryTableView extends GenericTableView<Brewery>{
     }
 
     @Override
-    public TableView<Brewery> CreateTableView() {
+    public TableView<Brewery> buildTable() {
         TableView<Brewery> table = new TableView<>();
 
         TableColumn<Brewery, String> breweryNameColumn = new TableColumn<>("Brewery");
@@ -79,12 +79,6 @@ public class BreweryTableView extends GenericTableView<Brewery>{
 
         table.getColumns().add(breweryNameColumn);
         table.getColumns().add(breweryLocationColumn);
-
-        table.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
-                metaPane.refreshMeta(newValue, this)
-        );
-
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         return table;
     }

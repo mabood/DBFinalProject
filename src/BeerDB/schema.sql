@@ -19,4 +19,19 @@ CREATE TABLE Bar (
     barName VARCHAR(100),
     barLocation VARCHAR(100));
 
+CREATE TABLE Inventory (
+    barID INT,
+    beerID INT,
+    PRIMARY KEY (barID, beerID),
+    FOREIGN KEY (barID) REFERENCES Bar(barID)
+    ON DELETE CASCADE,
+    FOREIGN KEY (beerID) REFERENCES Beer(beerID)
+    ON DELETE CASCADE);
 
+CREATE TABLE BeerBuzz (
+    commentID INT PRIMARY KEY AUTO_INCREMENT,
+    beerID INT,
+    rating INT,
+    comment VARCHAR(200),
+    FOREIGN KEY (beerID) REFERENCES Beer(beerID)
+    ON DELETE CASCADE);

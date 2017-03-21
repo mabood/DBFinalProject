@@ -98,6 +98,17 @@ public class BreweryMeta extends GenericMeta<Brewery> {
                 TabManager.setActiveTab(index);
             }
         });
+
+        removeBrewery.setOnAction(e -> {
+            boolean confirmed = ConfirmBox.display("Remove Brewery",
+                    "Are you sure you want to remove " + selected.getBreweryName() + "?",
+                    "Remove");
+            if (confirmed) {
+                BeardyBee.removeBrewery(selected);
+                parentPage.updateTable();
+                TabManager.refreshTab(TabManager.BEERS_INDEX);
+            }
+        });
     }
 
     private Node buildImg() {

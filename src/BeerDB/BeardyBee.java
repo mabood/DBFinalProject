@@ -19,8 +19,13 @@ public class BeardyBee {
         return breweryNames.contains(breweryName);
     }
 
-    public static boolean barExists(int barID) {
-        return barMap.containsKey(barID);
+    public static boolean barExists(String barName, String barLocation) {
+        for (Bar bar : barMap.values()) {
+            if (bar.getBarName() .equals(barName) && bar.getBarLocation().equals(barLocation)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static HashSet<String> getBreweryNames() {

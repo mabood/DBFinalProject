@@ -78,6 +78,16 @@ public class BarMeta extends GenericMeta<Bar> {
                 TabManager.setActiveTab(index);
             }
         });
+
+        removeBar.setOnAction(e -> {
+            boolean confirmed = ConfirmBox.display("Remove Bar",
+                    "Are you sure you want to remove " + selected.getBarName() + "?",
+                    "Remove");
+            if (confirmed) {
+                BeardyBee.removeBar(selected);
+                parentPage.updateTable();
+            }
+        });
     }
 
     @Override

@@ -116,7 +116,7 @@ public class AddBarBox {
             barBlankError.setVisible(true);
             barExistsError.setVisible(false);
         }
-        else if (BeardyBee.barExists(1)) {
+        else if (BeardyBee.barExists(barName, location)) {
             validated = false;
             barBlankError.setVisible(false);
             barExistsError.setVisible(true);

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -96,6 +97,16 @@ public class BeerMeta extends GenericMeta<Beer> {
                 }
                 int index = TabManager.addTab(tabTitle + selected.getBeerName(), beerQTable, true);
                 TabManager.setActiveTab(index);
+            }
+        });
+
+        removeBeer.setOnAction(e -> {
+            boolean confirmed = ConfirmBox.display("Remove Beer",
+                    "Are you sure you want to remove " + selected.getBeerName() + "?",
+                    "Remove");
+            if (confirmed) {
+                BeardyBee.removeBeer(selected);
+                parentPage.updateTable();
             }
         });
     }

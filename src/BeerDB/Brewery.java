@@ -84,7 +84,7 @@ public class Brewery implements SQLGenerator{
 
     @Override
     public String generateRemoveStatement() {
-        return "DELETE FROM Brewery\nWHERE breweryName = " + getBreweryName() +
-                ";\n";
+        return String.format("DELETE FROM Brewery\n" +
+                "WHERE breweryName = '%s';\n", getBreweryName());
     }
 }

@@ -62,8 +62,14 @@ public class BarMeta extends GenericMeta<Bar> {
         allBeersQuery.setOnAction(e -> {
             ObservableList<Beer> result = BeardyBee.queryBeersFromBar(selected);
             BeerQueryTableView beerQTable = new BeerQueryTableView(result);
-            int index = TabManager.addTab("Beers Served at " + selected.getBarName(), beerQTable, true);
-            TabManager.setActiveTab(index);
+
+            if (result.isEmpty()) {
+                AlertBox.display("No Beers Found", "There are currently no beers at " + selected.getBarName());
+            }
+            else {
+                int index = TabManager.addTab(result.size() + " Beers Served at " + selected.getBarName(), beerQTable, true);
+                TabManager.setActiveTab(index);
+            }
         });
     }
 

@@ -82,7 +82,7 @@ public class BreweryMeta extends GenericMeta<Brewery> {
         allBeersQuery.setOnAction(e -> {
             ObservableList<Beer> result = BeardyBee.queryBeersFromBrewery(selected);
             BeerQueryTableView beerQTable = new BeerQueryTableView(result);
-            int index = TabManager.addTab("Brewed by " + selected.getBreweryName(), beerQTable, true);
+            int index = TabManager.addTab(result.size() + " Beers Brewed by " + selected.getBreweryName(), beerQTable, true);
             TabManager.setActiveTab(index);
         });
     }

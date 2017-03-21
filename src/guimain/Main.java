@@ -23,38 +23,23 @@ public class Main extends Application {
         window.setTitle("Beer DB");
         Group root = new Group();
         Scene scene = new Scene(root, 900, 600, Color.WHITE);
-        TabPane tabPane = new TabPane();
         BorderPane borderPane = new BorderPane();
 
+
         //Beers tab
-        Tab tab1 = new Tab();
-        BeerTableView beersView = new BeerTableView();
-        tab1.setText("Beers");
-        tab1.setContent(beersView.CreateLayout());
-        tab1.setClosable(false);
-        tabPane.getTabs().add(tab1);
+        TabManager.addTab("Beers", new BeerTableView(), false);
 
         //Breweries tab
-        Tab tab2 = new Tab();
-        BreweryTableView breweriesView = new BreweryTableView();
-        tab2.setText("Breweries");
-        tab2.setContent(breweriesView.CreateLayout());
-        tab2.setClosable(false);
-        tabPane.getTabs().add(tab2);
+        TabManager.addTab("Breweries", new BreweryTableView(), false);
 
         //Bars tab
-        Tab tab3 = new Tab();
-        BarTableView barsView = new BarTableView();
-        tab3.setText("Bars");
-        tab3.setContent(barsView.CreateLayout());
-        tab3.setClosable(false);
-        tabPane.getTabs().add(tab3);
+        TabManager.addTab("Bars", new BarTableView(), false);
 
         // bind to take available space
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
 
-        borderPane.setCenter(tabPane);
+        borderPane.setCenter(TabManager.tabs);
         root.getChildren().add(borderPane);
         window.setScene(scene);
         window.setOnCloseRequest(e -> {

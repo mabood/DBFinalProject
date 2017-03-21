@@ -156,9 +156,7 @@ public class EditBreweryBox {
     private boolean onSubmitClick(Stage window) {
         Brewery updated = validateFields();
         if (updated != null) {
-            toEdit.setBreweryName(updated.getBreweryName());
-            toEdit.setBreweryLocation(updated.getBreweryLocation());
-            toEdit.setBreweryImgUrl(updated.getBreweryImgUrl());
+            toEdit.updateFields(updated.getBreweryName(), updated.getBreweryLocation(), updated.getBreweryImgUrl());
 
             BeardyBee.updateBrewery(toEdit);
             changed = true;

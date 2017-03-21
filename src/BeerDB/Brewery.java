@@ -71,20 +71,13 @@ public class Brewery implements SQLGenerator{
 
     @Override
     public String generateUpdateStatement() {
-        String output;
+        String sqlStatement = "UPDATE Brewery\n" +
+                "SET breweryName = '%s', breweryLocation = '%s', imgURL = '%s'\n" +
+                "WHERE breweryName = '%s'";
 
-        if (getBreweryImgUrl() == null) {
-            output = "UPDATE Brewery\nSET " +
-                    "', breweryLocation = '" + getBreweryLocation() +
-                    "'\nWHERE breweryName = '" + getBreweryName() + "'\n";
+        String imgURLupdate = getBreweryImgUrl() == null ? "null" : getBreweryImgUrl();
 
-        }
-        else {
-            output = "UPDATE Brewery\nSET " +
-                    "breweryLocation = '" + getBreweryLocation() + "', imgURL = '" +
-                    getBreweryImgUrl() + "'\nWHERE breweryName = '" +
-                    getBreweryName() + "'\n";
-        }
+        String output = String.format(sqlStatement, breweryName, breweryLocation, imgURLupdate, formerBreweryName);
 
         return output;
     }

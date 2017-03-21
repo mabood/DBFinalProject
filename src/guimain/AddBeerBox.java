@@ -35,7 +35,7 @@ public class AddBeerBox {
     private TextField imgField;
 
     public AddBeerBox() {
-        changed = true;
+        changed = false;
         beerNameLabel = new Label("Beer Name:");
         beerNameError = new Label("Beer Name cannot be blank!");
         beerNameError.setVisible(false);

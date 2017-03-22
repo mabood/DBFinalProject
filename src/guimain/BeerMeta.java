@@ -31,6 +31,9 @@ public class BeerMeta extends GenericMeta<Beer> {
     private Label beerAbv;
     private Label beerIbu;
 
+    private Label beerRatingLabel;
+    private Label beerRatingNumber;
+
     private Button allBarsQuery;
     private Button editBeer;
     private Button removeBeer;
@@ -52,6 +55,9 @@ public class BeerMeta extends GenericMeta<Beer> {
         beerBrewery.setWrapText(true);
         beerAbv = new Label();
         beerIbu = new Label();
+
+        beerRatingLabel = new Label("Average Rating:");
+        beerRatingNumber = new Label();
     }
 
     @Override
@@ -152,9 +158,11 @@ public class BeerMeta extends GenericMeta<Beer> {
         GridPane.setConstraints(beerAbv, 1, 2);
         GridPane.setConstraints(ibuLabel, 0, 3);
         GridPane.setConstraints(beerIbu, 1, 3);
+        GridPane.setConstraints(beerRatingLabel, 0, 5);
+        GridPane.setConstraints(beerRatingNumber, 1, 5);
 
         metaBox.getChildren().addAll(titleLabel, beerTitle, breweryLabel, beerBrewery,
-                abvLabel, beerAbv, ibuLabel, beerIbu);
+                abvLabel, beerAbv, ibuLabel, beerIbu, beerRatingLabel, beerRatingNumber);
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
@@ -205,6 +213,16 @@ public class BeerMeta extends GenericMeta<Beer> {
         else {
             ibuLabel.setVisible(false);
             beerIbu.setVisible(false);
+        }
+
+        if (selected.getBeerRatingAVG() > 0) {
+            beerRatingLabel.setVisible(true);
+            beerRatingNumber.setText(String.format("%.1f", selected.getBeerRatingAVG()) + " / 5");
+            beerRatingNumber.setVisible(true);
+        }
+        else {
+            beerRatingLabel.setVisible(false);
+            beerRatingNumber.setVisible(false);
         }
 
         if (buttons) {

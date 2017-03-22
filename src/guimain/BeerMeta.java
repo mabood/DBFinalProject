@@ -81,6 +81,13 @@ public class BeerMeta extends GenericMeta<Beer> {
     }
 
     private void updateButtons(Beer selected, GenericTableView parentPage) {
+        editBeer.setOnAction(e -> {
+            EditBeerBox editBox = new EditBeerBox(selected);
+            editBox.display();
+            if (editBox.changesMade()) {
+                parentPage.updateTable();
+            }
+        });
         allBarsQuery.setOnAction(e -> {
             String tabTitle = "";
             ObservableList<Bar> result = BeardyBee.queryBarsFromBeer(selected);

@@ -7,6 +7,7 @@ public class Beer implements SQLGenerator{
     private double beerAbv;
     private int beerIbu;
     private String beerImgUrl;
+    private double beerRatingAVG;
 
     public Beer(String beerName, String breweryName, double beerAbv, int beerIbu) {
         this.beerName = beerName;
@@ -37,6 +38,14 @@ public class Beer implements SQLGenerator{
 
     public void setBreweryName(String breweryName) {
         this.breweryName = breweryName;
+    }
+
+    public void setBeerRatingAVG(double beerRatingAVG) {
+        this.beerRatingAVG = beerRatingAVG;
+    }
+
+    public double getBeerRatingAVG() {
+        return beerRatingAVG;
     }
 
     public double getBeerAbv() {
@@ -84,7 +93,11 @@ public class Beer implements SQLGenerator{
 
     @Override
     public String generateGetTableStatement() {
-        return "SELECT * FROM Beer\nORDER BY beerName;\n";
+
+        return "SELECT b.*, AVG(COALESCE(bb.rating, 0))\nFROM Beer b LEFT " +
+                "OUTER JOIN BeerBuzz bb ON b.beerID = bb.beerID\nGROUP BY " +
+                "b.beerID, b.beerName, b.breweryName, b.beerABV, b.beerIBU," +
+                "b.imgURL\nORDER BY b.beerName;\n";
     }
 
     @Override

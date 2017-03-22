@@ -54,6 +54,11 @@ public class BeardyBee {
         DBConnector.insertTuple(inv);
     }
 
+    public static void insertRating(BeerBuzz beerBuzz) {
+
+        DBConnector.insertTuple(beerBuzz);
+    }
+
     public static ObservableList<Beer> queryBeersFromBar(Bar bar) {
         ObservableList<Beer> beers = FXCollections.observableArrayList();
         String query = "SELECT beerID\nFROM Inventory\nWHERE barID = " +
@@ -147,6 +152,7 @@ public class BeardyBee {
         double beerAbv;
         int beerIbu;
         String beerImgUrl;
+        double beerRatingAVG;
 
         //will query beer table and parse result set to populate beers list
 
@@ -158,10 +164,12 @@ public class BeardyBee {
                 beerAbv = beerTuples.getDouble(currentColumn++);
                 beerIbu = beerTuples.getInt(currentColumn++);
                 beerImgUrl = beerTuples.getString(currentColumn++);
+                beerRatingAVG = beerTuples.getDouble(currentColumn++);
 
                 insertingBeer = new Beer(beerName, breweryName, beerAbv, beerIbu);
                 insertingBeer.setBeerId(beerId);
                 insertingBeer.setBeerImgUrl(beerImgUrl);
+                insertingBeer.setBeerRatingAVG(beerRatingAVG);
 
                 beerMap.put(beerId, insertingBeer);
                 beers.add(insertingBeer);

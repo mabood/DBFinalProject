@@ -87,4 +87,18 @@ public class Brewery implements SQLGenerator{
         return String.format("DELETE FROM Brewery\n" +
                 "WHERE breweryName = '%s';\n", getBreweryName());
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof Brewery)) {
+            return false;
+        }
+        final Brewery cmp = (Brewery)other;
+        return this.breweryName.equals(cmp.getBreweryName())
+                && this.breweryLocation.equals(cmp.getBreweryLocation())
+                && this.breweryImgUrl.equals(cmp.getBreweryImgUrl());
+    }
 }

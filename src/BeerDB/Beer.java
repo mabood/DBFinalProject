@@ -122,4 +122,20 @@ public class Beer implements SQLGenerator{
     public String generateRemoveStatement() {
         return "DELETE FROM Beer\nWHERE beerID = " + getBeerId() + ";\n";
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof Beer)) {
+            return false;
+        }
+        final Beer cmp = (Beer)other;
+        return this.beerName.equals(cmp.getBeerName())
+                && this.breweryName.equals(cmp.getBreweryName())
+                && this.beerImgUrl.equals(cmp.getBeerImgUrl())
+                && this.beerAbv == cmp.getBeerAbv()
+                && this.beerIbu == cmp.getBeerIbu();
+    }
 }

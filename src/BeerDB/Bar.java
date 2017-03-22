@@ -58,4 +58,17 @@ public class Bar implements SQLGenerator{
     public String generateRemoveStatement() {
         return "DELETE FROM Bar\nWHERE barID = " + getBarId() + ";\n";
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (!(other instanceof Bar)) {
+            return false;
+        }
+        final Bar cmp = (Bar) other;
+        return this.barName.equals(cmp.getBarName())
+                && this.barLocation.equals(cmp.getBarLocation());
+    }
 }

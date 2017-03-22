@@ -29,6 +29,7 @@ public class EditBeerBox {
     private Label ibuLabel;
     private Label ibuError;
     private Label imgLabel;
+    private Label modifiedError;
 
     private ComboBox<String> breweryDropdown;
     private TextField beerNameField;
@@ -73,6 +74,9 @@ public class EditBeerBox {
             imgField.setText(toEdit.getBeerImgUrl());
         }
         imgField.setMinWidth(200);
+
+        modifiedError = new Label("No changes detected!");
+        modifiedError.setVisible(false);
     }
 
     public ObservableList<String> buildDropdown() {
@@ -124,6 +128,9 @@ public class EditBeerBox {
 
         pane.setAlignment(Pos.CENTER);
 
+        HBox errorMessage = new HBox(10);
+        errorMessage.setAlignment(Pos.CENTER);
+        errorMessage.getChildren().add(modifiedError);
         HBox buttons = new HBox(10);
         //Create two buttons
         Button yesButton = new Button("Update Beer");
@@ -146,16 +153,18 @@ public class EditBeerBox {
 
         GridPane.setConstraints(instructions, 0, 1);
         GridPane.setConstraints(pane, 0, 2);
-        GridPane.setConstraints(buttons, 0, 3);
+        GridPane.setConstraints(errorMessage, 0, 3);
+        GridPane.setConstraints(buttons, 0, 4);
 
-        layout.getChildren().addAll(instructions, pane, buttons);
+        layout.getChildren().addAll(instructions, pane, errorMessage, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
     }
 
-    private boolean validateFields() {
+    private Beer validateFields() {
+        Beer updated = null;
         String beerName = beerNameField.getCharacters().toString();
         String breweryName = breweryDropdown.getValue();
         Double abv = 0.0;
@@ -205,24 +214,32 @@ public class EditBeerBox {
 
         //if after all the checks, validated is still true, update Beer object
         if (validated) {
-            toEdit.setBeerName(beerName);
-            toEdit.setBreweryName(breweryDropdown.getValue());
-            toEdit.setBeerAbv(abv);
-            toEdit.setBeerIbu(ibu);
-            toEdit.setBeerImgUrl(imgUrl);
+            updated = new Beer(beerName, breweryName, abv, ibu);
+            updated.setBeerImgUrl(imgUrl);
         }
 
-        return validated;
+        return updated;
     }
 
     private boolean onSubmitClick(Stage window) {
-        boolean updated = validateFields();
-        if (updated) {
+        Beer updated = validateFields();
+        if (updated != null && !toEdit.equals(updated)) {
+            modifiedError.setVisible(false);
+            toEdit.setBeerName(updated.getBeerName());
+            toEdit.setBreweryName(updated.getBreweryName());
+            toEdit.setBeerAbv(updated.getBeerAbv());
+            toEdit.setBeerIbu(updated.getBeerIbu());
+            toEdit.setBeerImgUrl(updated.getBeerImgUrl());
             BeardyBee.updateBeer(toEdit);
             changed = true;
             return true;
         }
+        else if (updated != null && toEdit.equals(updated)) {
+            modifiedError.setVisible(true);
+            return false;
+        }
         else {
+            modifiedError.setVisible(false);
             return false;
         }
     }

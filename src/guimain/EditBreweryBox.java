@@ -24,6 +24,7 @@ public class EditBreweryBox {
     private Label locationLabel;
     private Label locationError;
     private Label imgLabel;
+    private Label modifiedError;
 
     private TextField breweryNameField;
     private TextField locationField;
@@ -52,6 +53,9 @@ public class EditBreweryBox {
             imgField.setText(toEdit.getBreweryImgUrl());
         }
         imgField.setMinWidth(200);
+
+        modifiedError = new Label("No changes detected");
+        modifiedError.setVisible(false);
     }
 
     public void display() {
@@ -87,6 +91,9 @@ public class EditBreweryBox {
 
         pane.setAlignment(Pos.CENTER);
 
+        HBox errorMessage = new HBox(10);
+        errorMessage.setAlignment(Pos.CENTER);
+        errorMessage.getChildren().add(modifiedError);
         HBox buttons = new HBox(10);
         //Create two buttons
         Button yesButton = new Button("Update Brewery");
@@ -108,9 +115,10 @@ public class EditBreweryBox {
 
         GridPane.setConstraints(instructions, 0, 1);
         GridPane.setConstraints(pane, 0, 2);
-        GridPane.setConstraints(buttons, 0, 3);
+        GridPane.setConstraints(errorMessage, 0, 3);
+        GridPane.setConstraints(buttons, 0, 4);
 
-        layout.getChildren().addAll(instructions, pane, buttons);
+        layout.getChildren().addAll(instructions, pane, errorMessage, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
@@ -155,14 +163,18 @@ public class EditBreweryBox {
 
     private boolean onSubmitClick(Stage window) {
         Brewery updated = validateFields();
-        if (updated != null) {
+        if (updated != null && !toEdit.equals(updated)) {
             toEdit.updateFields(updated.getBreweryName(), updated.getBreweryLocation(), updated.getBreweryImgUrl());
-
             BeardyBee.updateBrewery(toEdit);
             changed = true;
             return true;
         }
+        else if (updated != null && toEdit.equals(updated)) {
+            modifiedError.setVisible(true);
+            return false;
+        }
         else {
+            modifiedError.setVisible(false);
             return false;
         }
     }

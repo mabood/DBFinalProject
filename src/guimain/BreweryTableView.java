@@ -32,6 +32,7 @@ public class BreweryTableView extends GenericTableView<Brewery>{
     public void updateTable() {
         items = updateItems();
         itemTable.setItems(items);
+        itemTable.refresh();
 
         if (images) {
             BreweryImageCache.updateBreweries(items);

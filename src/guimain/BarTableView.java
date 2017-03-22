@@ -32,6 +32,7 @@ public class BarTableView extends GenericTableView<Bar>{
     public void updateTable() {
         items = updateItems();
         itemTable.setItems(items);
+        itemTable.refresh();
 
         itemTable.getSelectionModel().selectFirst();
     }

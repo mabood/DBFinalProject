@@ -88,6 +88,10 @@ public class AddRatingBox {
 
         if (ratingValue < 1 || ratingValue > 5) {
             validated = false;
+            blankError.setVisible(true);
+        }
+        else {
+            blankError.setVisible(false);
         }
 
         if (validated) {

@@ -59,16 +59,21 @@ public class Bar implements SQLGenerator{
         return "DELETE FROM Bar\nWHERE barID = " + getBarId() + ";\n";
     }
 
-    @Override
-    public boolean equals(Object other) {
+    public boolean compareFields(Object other) {
         if (other == null) {
             return false;
         }
         if (!(other instanceof Bar)) {
             return false;
         }
-        final Bar cmp = (Bar) other;
-        return this.barName.equals(cmp.getBarName())
-                && this.barLocation.equals(cmp.getBarLocation());
+        final Bar cmp = (Bar)other;
+
+        if (this.barName != null && !this.barName.equals(cmp.getBarName()) || this.barName == null && cmp.getBarName() != null) {
+            return false;
+        }
+        if (this.barLocation != null && !this.barLocation.equals(cmp.getBarLocation()) || this.barLocation == null && cmp.getBarLocation() != null) {
+            return false;
+        }
+        return true;
     }
 }

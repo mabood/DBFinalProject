@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class BeerMeta extends GenericMeta<Beer> {
     private ImageView imgTile;
@@ -31,8 +28,7 @@ public class BeerMeta extends GenericMeta<Beer> {
     private Label beerAbv;
     private Label beerIbu;
 
-    private Label beerRatingLabel;
-    private Label beerRatingNumber;
+    private StarRating beerStars;
 
     private Button allBarsQuery;
     private Button editBeer;
@@ -56,8 +52,7 @@ public class BeerMeta extends GenericMeta<Beer> {
         beerAbv = new Label();
         beerIbu = new Label();
 
-        beerRatingLabel = new Label("Average Rating:");
-        beerRatingNumber = new Label();
+        beerStars =  new StarRating(true);
     }
 
     @Override
@@ -145,10 +140,12 @@ public class BeerMeta extends GenericMeta<Beer> {
     public Node buildMeta(){
         BorderPane metaPane = new BorderPane();
 
-        GridPane metaBox = new GridPane();
+        VBox metaBox = new VBox(10);
         metaBox.setPadding(new Insets(10,10,10,10));
-        metaBox.setVgap(10);
-        metaBox.setHgap(10);
+        GridPane metaGrid = new GridPane();
+
+        metaGrid.setVgap(10);
+        metaGrid.setHgap(10);
 
         GridPane.setConstraints(titleLabel, 0, 0);
         GridPane.setConstraints(beerTitle, 1, 0);
@@ -158,14 +155,14 @@ public class BeerMeta extends GenericMeta<Beer> {
         GridPane.setConstraints(beerAbv, 1, 2);
         GridPane.setConstraints(ibuLabel, 0, 3);
         GridPane.setConstraints(beerIbu, 1, 3);
-        GridPane.setConstraints(beerRatingLabel, 0, 5);
-        GridPane.setConstraints(beerRatingNumber, 1, 5);
 
-        metaBox.getChildren().addAll(titleLabel, beerTitle, breweryLabel, beerBrewery,
-                abvLabel, beerAbv, ibuLabel, beerIbu, beerRatingLabel, beerRatingNumber);
+        metaGrid.getChildren().addAll(titleLabel, beerTitle, breweryLabel, beerBrewery,
+                abvLabel, beerAbv, ibuLabel, beerIbu);
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
+
+        metaBox.getChildren().addAll(metaGrid, beerStars.getNode());
 
         metaPane.setTop(buildImg());
         metaPane.setCenter(metaBox);
@@ -216,13 +213,10 @@ public class BeerMeta extends GenericMeta<Beer> {
         }
 
         if (selected.getBeerRatingAVG() > 0) {
-            beerRatingLabel.setVisible(true);
-            beerRatingNumber.setText(String.format("%.1f", selected.getBeerRatingAVG()) + " / 5");
-            beerRatingNumber.setVisible(true);
+            beerStars.displayFixedRating(selected.getBeerRatingAVG());
         }
         else {
-            beerRatingLabel.setVisible(false);
-            beerRatingNumber.setVisible(false);
+            beerStars.getNode().setVisible(false);
         }
 
         if (buttons) {

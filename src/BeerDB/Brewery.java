@@ -88,8 +88,7 @@ public class Brewery implements SQLGenerator{
                 "WHERE breweryName = '%s';\n", getBreweryName());
     }
 
-    @Override
-    public boolean equals(Object other) {
+    public boolean compareFields(Object other) {
         if (other == null) {
             return false;
         }
@@ -97,8 +96,16 @@ public class Brewery implements SQLGenerator{
             return false;
         }
         final Brewery cmp = (Brewery)other;
-        return this.breweryName.equals(cmp.getBreweryName())
-                && this.breweryLocation.equals(cmp.getBreweryLocation())
-                && this.breweryImgUrl.equals(cmp.getBreweryImgUrl());
+
+        if (this.breweryName != null && !this.breweryName.equals(cmp.getBreweryName()) || this.breweryName == null && cmp.getBreweryName() != null) {
+            return false;
+        }
+        if (this.breweryLocation != null && !this.breweryLocation.equals(cmp.getBreweryLocation()) || this.breweryLocation == null && cmp.getBreweryLocation() != null) {
+            return false;
+        }
+        if (this.breweryImgUrl != null && !this.breweryImgUrl.equals(cmp.getBreweryImgUrl()) || this.breweryImgUrl == null && cmp.getBreweryImgUrl() != null) {
+            return false;
+        }
+        return true;
     }
 }

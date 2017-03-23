@@ -123,8 +123,7 @@ public class Beer implements SQLGenerator{
         return "DELETE FROM Beer\nWHERE beerID = " + getBeerId() + ";\n";
     }
 
-    @Override
-    public boolean equals(Object other) {
+    public boolean compareFields(Object other) {
         if (other == null) {
             return false;
         }
@@ -132,10 +131,22 @@ public class Beer implements SQLGenerator{
             return false;
         }
         final Beer cmp = (Beer)other;
-        return this.beerName.equals(cmp.getBeerName())
-                && this.breweryName.equals(cmp.getBreweryName())
-                && this.beerImgUrl.equals(cmp.getBeerImgUrl())
-                && this.beerAbv == cmp.getBeerAbv()
-                && this.beerIbu == cmp.getBeerIbu();
+
+        if (this.beerName != null && !this.beerName.equals(cmp.getBeerName()) || this.beerName == null && cmp.getBeerName() != null) {
+            return false;
+        }
+        if (this.breweryName != null && !this.breweryName.equals(cmp.getBreweryName()) || this.breweryName == null && cmp.getBreweryName() != null) {
+            return false;
+        }
+        if (this.beerImgUrl != null && !this.beerImgUrl.equals(cmp.getBeerImgUrl()) || this.beerImgUrl == null && cmp.getBeerImgUrl() != null) {
+            return false;
+        }
+        if (this.beerAbv != cmp.getBeerAbv()) {
+            return false;
+        }
+        if (this.beerIbu != cmp.getBeerIbu()) {
+            return false;
+        }
+        return true;
     }
 }

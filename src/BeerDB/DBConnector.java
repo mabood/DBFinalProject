@@ -68,7 +68,7 @@ public class DBConnector {
     public static void insertTuple(SQLGenerator obj) {
         String insertStatement = obj.generateInsertStatement();
 
-        System.out.println(obj.generateInsertStatement());
+        System.out.println("Executing Insert:\n" + insertStatement);
 
         if (obj.generateInsertStatement() != null) {
             executeNoResult(insertStatement);

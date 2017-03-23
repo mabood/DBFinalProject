@@ -4,16 +4,15 @@ import BeerDB.BeardyBee;
 import BeerDB.Beer;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+import java.util.Iterator;
+import java.util.ListIterator;
 
 public class BeerTableView extends GenericTableView<Beer> {
 
@@ -33,10 +32,11 @@ public class BeerTableView extends GenericTableView<Beer> {
     }
 
     @Override
-    public void updateTable() {
+    public void updateTable(Object lastSelection) {
         items = updateItems();
         itemTable.setItems(items);
         itemTable.refresh();
+        int lastIndex= -1;
 
         if (images) {
             BeerImageCache.updateBeers(items);
@@ -48,7 +48,22 @@ public class BeerTableView extends GenericTableView<Beer> {
             (new Thread(new BeerImageCache())).start();
         }
 
-        itemTable.getSelectionModel().selectFirst();
+        if (lastSelection instanceof Beer) {
+            final Beer cmp = (Beer) lastSelection;
+            ListIterator<Beer> it = items.listIterator();
+            while (it.hasNext()) {
+                if (cmp.compareFields(it.next())) {
+                    lastIndex = it.previousIndex();
+                    break;
+                }
+            }
+        }
+        if (lastIndex > -1) {
+            itemTable.getSelectionModel().select(lastIndex);
+        }
+        else {
+            itemTable.getSelectionModel().selectFirst();
+        }
     }
 
     @Override
@@ -58,7 +73,7 @@ public class BeerTableView extends GenericTableView<Beer> {
             AddBeerBox addBeer = new AddBeerBox();
             addBeer.display();
             if (addBeer.changesMade()) {
-                updateTable();
+                updateTable(null);
             }
         });
 

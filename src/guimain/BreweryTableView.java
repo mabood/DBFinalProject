@@ -11,6 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 
+import java.util.ListIterator;
+
 public class BreweryTableView extends GenericTableView<Brewery>{
 
     public BreweryTableView() {
@@ -29,10 +31,11 @@ public class BreweryTableView extends GenericTableView<Brewery>{
     }
 
     @Override
-    public void updateTable() {
+    public void updateTable(Object lastSelection) {
         items = updateItems();
         itemTable.setItems(items);
         itemTable.refresh();
+        int lastIndex = -1;
 
         if (images) {
             BreweryImageCache.updateBreweries(items);
@@ -44,7 +47,22 @@ public class BreweryTableView extends GenericTableView<Brewery>{
             (new Thread(new BreweryImageCache())).start();
         }
 
-        itemTable.getSelectionModel().selectFirst();
+        if (lastSelection instanceof Brewery) {
+            final Brewery cmp = (Brewery) lastSelection;
+            ListIterator<Brewery> it = items.listIterator();
+            while (it.hasNext()) {
+                if (cmp.compareFields(it.next())) {
+                    lastIndex = it.previousIndex();
+                    break;
+                }
+            }
+        }
+        if (lastIndex > -1) {
+            itemTable.getSelectionModel().select(lastIndex);
+        }
+        else {
+            itemTable.getSelectionModel().selectFirst();
+        }
     }
 
     @Override
@@ -54,7 +72,7 @@ public class BreweryTableView extends GenericTableView<Brewery>{
             AddBreweryBox addBrewery = new AddBreweryBox();
             addBrewery.display();
             if (addBrewery.changesMade()) {
-                updateTable();
+                updateTable(null);
             }
         });
 

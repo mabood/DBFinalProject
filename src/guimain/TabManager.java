@@ -2,7 +2,6 @@ package guimain;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.stage.Stage;
 
 public class TabManager {
     static TabPane tabs = new TabPane();
@@ -33,7 +32,7 @@ public class TabManager {
     }
 
     public static void refreshTab(int index) {
-        pages[index].updateTable();
+        pages[index].updateTable(null);
     }
 
 

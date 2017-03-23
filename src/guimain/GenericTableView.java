@@ -24,7 +24,7 @@ abstract class GenericTableView<T> {
         return FXCollections.observableArrayList();
     }
 
-    public void updateTable() {
+    public void updateTable(Object lastSelection) {
         items = updateItems();
         itemTable.setItems(items);
         itemTable.getSelectionModel().selectFirst();
@@ -46,7 +46,7 @@ abstract class GenericTableView<T> {
     public BorderPane CreateLayout() {
 
         BorderPane pane = new BorderPane();
-        updateTable();
+        updateTable(null);
 
         pane.setCenter(itemTable);
         pane.setRight(metaPane.pane);

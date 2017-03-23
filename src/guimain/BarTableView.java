@@ -11,6 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
+import java.util.ListIterator;
+
 public class BarTableView extends GenericTableView<Bar>{
 
     public BarTableView() {
@@ -29,12 +31,28 @@ public class BarTableView extends GenericTableView<Bar>{
     }
 
     @Override
-    public void updateTable() {
+    public void updateTable(Object lastSelection) {
         items = updateItems();
         itemTable.setItems(items);
         itemTable.refresh();
+        int lastIndex = -1;
 
-        itemTable.getSelectionModel().selectFirst();
+        if (lastSelection instanceof Bar) {
+            final Bar cmp = (Bar) lastSelection;
+            ListIterator<Bar> it = items.listIterator();
+            while (it.hasNext()) {
+                if (cmp.compareFields(it.next())) {
+                    lastIndex = it.previousIndex();
+                    break;
+                }
+            }
+        }
+        if (lastIndex > -1) {
+            itemTable.getSelectionModel().select(lastIndex);
+        }
+        else {
+            itemTable.getSelectionModel().selectFirst();
+        }
     }
 
     @Override
@@ -44,7 +62,7 @@ public class BarTableView extends GenericTableView<Bar>{
             AddBarBox barBox = new AddBarBox();
             barBox.display();
             if (barBox.changesMade()) {
-                updateTable();
+                updateTable(null);
             }
         });
 

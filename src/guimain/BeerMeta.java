@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -88,7 +87,7 @@ public class BeerMeta extends GenericMeta<Beer> {
             EditBeerBox editBox = new EditBeerBox(selected);
             editBox.display();
             if (editBox.changesMade()) {
-                parentPage.updateTable();
+                parentPage.updateTable(selected);
             }
         });
 
@@ -117,7 +116,7 @@ public class BeerMeta extends GenericMeta<Beer> {
                     "Remove");
             if (confirmed) {
                 BeardyBee.removeBeer(selected);
-                parentPage.updateTable();
+                parentPage.updateTable(null);
             }
         });
 
@@ -125,7 +124,7 @@ public class BeerMeta extends GenericMeta<Beer> {
             AddRatingBox rBox = new AddRatingBox(selected);
             rBox.display();
             if (rBox.changesMade()) {
-                parentPage.updateTable();
+                parentPage.updateTable(selected);
             }
         });
     }

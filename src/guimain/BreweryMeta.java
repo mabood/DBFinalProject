@@ -76,7 +76,7 @@ public class BreweryMeta extends GenericMeta<Brewery> {
             EditBreweryBox editBox = new EditBreweryBox(selected);
             editBox.display();
             if (editBox.changesMade()) {
-                parentPage.updateTable();
+                parentPage.updateTable(selected);
                 TabManager.refreshTab(TabManager.BEERS_INDEX);
             }
         });
@@ -106,7 +106,7 @@ public class BreweryMeta extends GenericMeta<Brewery> {
                     "Remove");
             if (confirmed) {
                 BeardyBee.removeBrewery(selected);
-                parentPage.updateTable();
+                parentPage.updateTable(null);
                 TabManager.refreshTab(TabManager.BEERS_INDEX);
             }
         });

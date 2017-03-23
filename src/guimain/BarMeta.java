@@ -3,7 +3,6 @@ package guimain;
 import BeerDB.Bar;
 import BeerDB.BeardyBee;
 import BeerDB.Beer;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -63,7 +62,7 @@ public class BarMeta extends GenericMeta<Bar> {
             EditBarBox editBox = new EditBarBox(selected);
             editBox.display();
             if (editBox.changesMade()) {
-                parentPage.updateTable();
+                parentPage.updateTable(selected);
             }
         });
 
@@ -93,7 +92,7 @@ public class BarMeta extends GenericMeta<Bar> {
                     "Remove");
             if (confirmed) {
                 BeardyBee.removeBar(selected);
-                parentPage.updateTable();
+                parentPage.updateTable(null);
             }
         });
     }

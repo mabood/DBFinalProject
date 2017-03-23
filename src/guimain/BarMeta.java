@@ -43,7 +43,7 @@ public class BarMeta extends GenericMeta<Bar> {
         allBeersQuery = new Button("List all beers served at this bar");
         editBar = new Button("Edit bar");
         removeBar = new Button("Remove bar");
-        inventoryBtn = new Button("Add a beer for this bar to serve");
+        inventoryBtn = new Button("Add a beer to this bar");
     }
 
     private Node buildButtons() {

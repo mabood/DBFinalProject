@@ -14,7 +14,7 @@ public class StarRating {
     public StarRating(boolean belowText) {
         rating = new Rating();
         rating.setMax(5);
-        rating.setPartialRating(false);
+        rating.setPartialRating(true);
         rating.setUpdateOnHover(true);
         starsValue = 0;
 
@@ -33,6 +33,10 @@ public class StarRating {
 
     public Node getNode() {
         return container;
+    }
+
+    public double getRatingValue() {
+        return rating.getRating();
     }
 
     private void updateValue(double value) {
@@ -54,11 +58,13 @@ public class StarRating {
     }
 
     public void displayFixedRating(double stars) {
+        rating.setUpdateOnHover(false);
         updateValue(stars);
         container.setVisible(true);
     }
 
     public void displaySelectRating() {
+        rating.setPartialRating(false);
         updateValue(0);
     }
 

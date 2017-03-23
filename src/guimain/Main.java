@@ -20,7 +20,7 @@ public class Main extends Application {
 
         window.setTitle("Beer DB");
         Group root = new Group();
-        Scene scene = new Scene(root, 900, 650, Color.WHITE);
+        Scene scene = new Scene(root, 1100, 800, Color.WHITE);
         BorderPane borderPane = new BorderPane();
 
 

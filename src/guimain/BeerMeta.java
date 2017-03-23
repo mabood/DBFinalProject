@@ -33,6 +33,7 @@ public class BeerMeta extends GenericMeta<Beer> {
     private Button allBarsQuery;
     private Button editBeer;
     private Button removeBeer;
+    private Button addBeerRating;
 
     public BeerMeta(boolean showImages, boolean showButtons) {
         super(showImages, showButtons);
@@ -69,12 +70,13 @@ public class BeerMeta extends GenericMeta<Beer> {
         allBarsQuery = new Button("List all bars serving this beer");
         editBeer = new Button("Edit Beer");
         removeBeer = new Button("Remove Beer");
+        addBeerRating = new Button("Rate This Beer");
     }
 
     private Node buildButtons() {
         VBox buttonBox = new VBox(10);
         if (buttons) {
-            buttonBox.getChildren().addAll(editBeer, removeBeer, allBarsQuery);
+            buttonBox.getChildren().addAll(addBeerRating, editBeer, removeBeer, allBarsQuery);
             buttonBox.setAlignment(Pos.CENTER);
             buttonBox.setPadding(new Insets(10,10, 0,10));
         }
@@ -115,6 +117,14 @@ public class BeerMeta extends GenericMeta<Beer> {
                     "Remove");
             if (confirmed) {
                 BeardyBee.removeBeer(selected);
+                parentPage.updateTable();
+            }
+        });
+
+        addBeerRating.setOnAction(e -> {
+            AddRatingBox rBox = new AddRatingBox(selected);
+            rBox.display();
+            if (rBox.changesMade()) {
                 parentPage.updateTable();
             }
         });

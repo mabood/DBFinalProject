@@ -210,7 +210,7 @@ public class BeerMeta extends GenericMeta<Beer> {
 
         beerTitle.setText(selected.getBeerName());
         beerBrewery.setText(selected.getBreweryName());
-        beerAbv.setText(Double.toString(selected.getBeerAbv()));
+        beerAbv.setText(Double.toString(selected.getBeerAbv()) + "%");
 
         if (selected.getBeerIbu() > 0) {
             beerIbu.setText(Integer.toString(selected.getBeerIbu()));

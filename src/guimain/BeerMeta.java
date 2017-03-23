@@ -169,6 +169,10 @@ public class BeerMeta extends GenericMeta<Beer> {
         metaGrid.getChildren().addAll(titleLabel, beerTitle, breweryLabel, beerBrewery,
                 abvLabel, beerAbv, ibuLabel, beerIbu);
 
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMinWidth(60);
+        metaGrid.getColumnConstraints().add(col1);
+
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);
 

@@ -9,10 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class BarMeta extends GenericMeta<Bar> {
     private Label nameLabel;
@@ -112,6 +109,10 @@ public class BarMeta extends GenericMeta<Bar> {
         GridPane.setConstraints(barLocation, 1, 1);
 
         metaBox.getChildren().addAll(nameLabel, barName, locationLabel, barLocation);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMinWidth(60);
+        metaBox.getColumnConstraints().add(col1);
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);

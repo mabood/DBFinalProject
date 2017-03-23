@@ -11,10 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class BreweryMeta extends GenericMeta<Brewery> {
     private ImageView imgTile;
@@ -144,6 +141,10 @@ public class BreweryMeta extends GenericMeta<Brewery> {
         GridPane.setConstraints(breweryLocation, 1, 1);
 
         metaBox.getChildren().addAll(nameLabel, breweryName, locationLabel, breweryLocation);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMinWidth(60);
+        metaBox.getColumnConstraints().add(col1);
 
         HBox leftMargin = new HBox(10);
         HBox rightMargin = new HBox(10);

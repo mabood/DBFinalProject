@@ -43,6 +43,7 @@ public class EditBeerBox {
         beerNameLabel = new Label("Beer Name:");
         beerNameError = new Label("Beer Name cannot be blank!");
         beerNameError.setVisible(false);
+        beerNameError.getStyleClass().add("error");
         beerNameField = new TextField();
         beerNameField.setText(toEdit.getBeerName());
         beerNameField.setMinWidth(200);
@@ -50,6 +51,7 @@ public class EditBeerBox {
         breweryNameLabel = new Label("Brewery Name:");
         breweryError = new Label("Brewery cannot be blank!");
         breweryError.setVisible(false);
+        breweryError.getStyleClass().add("error");
         breweryDropdown = new ComboBox<>(buildDropdown());
         breweryDropdown.setValue(toEdit.getBreweryName());
         breweryDropdown.setMinWidth(200);
@@ -57,6 +59,7 @@ public class EditBeerBox {
         abvLabel = new Label("Alcohol By Volume:");
         abvError = new Label("ABV value must be between 0 and 100!");
         abvError.setVisible(false);
+        abvError.getStyleClass().add("error");
         abvField = new TextField();
         abvField.setText(String.valueOf(toEdit.getBeerAbv()));
         abvField.setMaxWidth(60);
@@ -64,6 +67,7 @@ public class EditBeerBox {
         ibuLabel = new Label("IBU score:");
         ibuError = new Label("IBU value must be between 0 and 100!");
         ibuError.setVisible(false);
+        ibuError.getStyleClass().add("error");
         ibuField = new TextField();
         ibuField.setText(String.valueOf(toEdit.getBeerIbu()));
         ibuField.setMaxWidth(60);
@@ -77,6 +81,7 @@ public class EditBeerBox {
 
         modifiedError = new Label("No changes detected!");
         modifiedError.setVisible(false);
+        modifiedError.getStyleClass().add("error");
     }
 
     public ObservableList<String> buildDropdown() {
@@ -159,6 +164,7 @@ public class EditBeerBox {
         layout.getChildren().addAll(instructions, pane, errorMessage, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         window.setScene(scene);
         window.showAndWait();
     }

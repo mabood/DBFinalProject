@@ -34,12 +34,15 @@ public class AddBarBox {
         barExistsError = new Label("Bar already exists!");
         barBlankError.setVisible(false);
         barExistsError.setVisible(false);
+        barBlankError.getStyleClass().add("error");
+        barExistsError.getStyleClass().add("error");
         barNameField = new TextField();
         barNameField.setMinWidth(200);
 
         locationLabel = new Label("Bar Location:");
         locationError = new Label("Location cannot be blank!");
         locationError.setVisible(false);
+        locationError.getStyleClass().add("error");
         locationField = new TextField();
         locationField.setMinWidth(200);
     }
@@ -101,6 +104,7 @@ public class AddBarBox {
         layout.getChildren().addAll(instructions, pane, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         window.setScene(scene);
         window.showAndWait();
     }

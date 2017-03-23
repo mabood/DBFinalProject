@@ -36,6 +36,8 @@ public class EditBarBox {
         barExistsError = new Label("Bar already exists!");
         barBlankError.setVisible(false);
         barExistsError.setVisible(false);
+        barBlankError.getStyleClass().add("error");
+        barExistsError.getStyleClass().add("error");
         barNameField = new TextField();
         barNameField.setText(toEdit.getBarName());
         barNameField.setMinWidth(200);
@@ -43,12 +45,14 @@ public class EditBarBox {
         locationLabel = new Label("Bar Location:");
         locationError = new Label("Location cannot be blank!");
         locationError.setVisible(false);
+        locationError.getStyleClass().add("error");
         locationField = new TextField();
         locationField.setText(toEdit.getBarLocation());
         locationField.setMinWidth(200);
 
         modifiedError = new Label("No changes detected!");
         modifiedError.setVisible(false);
+        modifiedError.getStyleClass().add("error");
     }
 
     public void display() {
@@ -112,6 +116,7 @@ public class EditBarBox {
         layout.getChildren().addAll(instructions, pane, errorMessage, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         window.setScene(scene);
         window.showAndWait();
     }

@@ -21,8 +21,8 @@ public class Main extends Application {
         window.setTitle("Beer DB");
         Group root = new Group();
         Scene scene = new Scene(root, 1100, 720, Color.WHITE);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         BorderPane borderPane = new BorderPane();
-
 
         //Beers tab
         TabManager.addTab("Beers", new BeerTableView(), false);

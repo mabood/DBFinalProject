@@ -36,6 +36,7 @@ public class EditBreweryBox {
         breweryNameLabel = new Label("Brewery Name:");
         breweryBlankError = new Label("Brewery name cannot be blank!");
         breweryBlankError.setVisible(false);
+        breweryBlankError.getStyleClass().add("error");
         breweryNameField = new TextField();
         breweryNameField.setText(toEdit.getBreweryName());
         breweryNameField.setMinWidth(200);
@@ -43,6 +44,7 @@ public class EditBreweryBox {
         locationLabel = new Label("Brewery Location:");
         locationError = new Label("Location cannot be blank!");
         locationError.setVisible(false);
+        locationError.getStyleClass().add("error");
         locationField = new TextField();
         locationField.setText(toEdit.getBreweryLocation());
         locationField.setMinWidth(200);
@@ -56,6 +58,7 @@ public class EditBreweryBox {
 
         modifiedError = new Label("No changes detected");
         modifiedError.setVisible(false);
+        modifiedError.getStyleClass().add("error");
     }
 
     public void display() {
@@ -121,6 +124,7 @@ public class EditBreweryBox {
         layout.getChildren().addAll(instructions, pane, errorMessage, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         window.setScene(scene);
         window.showAndWait();
     }

@@ -38,6 +38,7 @@ public class AddBeerBox {
         changed = false;
         beerNameLabel = new Label("Beer Name:");
         beerNameError = new Label("Beer Name cannot be blank!");
+        beerNameError.getStyleClass().add("error");
         beerNameError.setVisible(false);
         beerNameField = new TextField();
         beerNameField.setMinWidth(200);
@@ -45,18 +46,21 @@ public class AddBeerBox {
         breweryNameLabel = new Label("Brewery Name:");
         breweryError = new Label("Brewery cannot be blank!");
         breweryError.setVisible(false);
+        breweryError.getStyleClass().add("error");
         breweryDropdown = new ComboBox<>(buildDropdown());
         breweryDropdown.setMinWidth(200);
 
         abvLabel = new Label("Alcohol By Volume:");
         abvError = new Label("ABV value must be between 0 and 100!");
         abvError.setVisible(false);
+        abvError.getStyleClass().add("error");
         abvField = new TextField();
         abvField.setMaxWidth(60);
 
         ibuLabel = new Label("IBU score:");
         ibuError = new Label("IBU value must be between 0 and 100!");
         ibuError.setVisible(false);
+        ibuError.getStyleClass().add("error");
         ibuField = new TextField();
         ibuField.setMaxWidth(60);
 
@@ -141,6 +145,7 @@ public class AddBeerBox {
         layout.getChildren().addAll(instructions, pane, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         window.setScene(scene);
         window.showAndWait();
     }

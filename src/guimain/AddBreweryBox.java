@@ -35,12 +35,15 @@ public class AddBreweryBox {
         breweryExistsError = new Label("Brewery already exists!");
         breweryBlankError.setVisible(false);
         breweryExistsError.setVisible(false);
+        breweryBlankError.getStyleClass().add("error");
+        breweryExistsError.getStyleClass().add("error");
         breweryNameField = new TextField();
         breweryNameField.setMinWidth(200);
 
         locationLabel = new Label("Brewery Location:");
         locationError = new Label("Location cannot be blank!");
         locationError.setVisible(false);
+        locationError.getStyleClass().add("error");
         locationField = new TextField();
         locationField.setMinWidth(200);
 
@@ -109,6 +112,7 @@ public class AddBreweryBox {
         layout.getChildren().addAll(instructions, pane, buttons);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("guimain/stylesheets/Hornet.css");
         window.setScene(scene);
         window.showAndWait();
     }

@@ -123,6 +123,11 @@ public class Beer implements SQLGenerator{
         return "DELETE FROM Beer\nWHERE beerID = " + getBeerId() + ";\n";
     }
 
+    @Override
+    public String toString() {
+        return this.beerName;
+    }
+
     public boolean compareFields(Object other) {
         if (other == null) {
             return false;

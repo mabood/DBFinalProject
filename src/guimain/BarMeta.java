@@ -21,6 +21,7 @@ public class BarMeta extends GenericMeta<Bar> {
     private Button allBeersQuery;
     private Button editBar;
     private Button removeBar;
+    private Button inventoryBtn;
 
     public BarMeta(boolean showButtons) {
         super(false, showButtons);
@@ -42,12 +43,13 @@ public class BarMeta extends GenericMeta<Bar> {
         allBeersQuery = new Button("List all beers served at this bar");
         editBar = new Button("Edit bar");
         removeBar = new Button("Remove bar");
+        inventoryBtn = new Button("Add a beer for this bar to serve");
     }
 
     private Node buildButtons() {
         VBox buttonBox = new VBox(10);
         if (buttons) {
-            buttonBox.getChildren().addAll(editBar, removeBar, allBeersQuery);
+            buttonBox.getChildren().addAll(editBar, removeBar, inventoryBtn, allBeersQuery);
             buttonBox.setAlignment(Pos.CENTER);
             buttonBox.setPadding(new Insets(10,10, 0,10));
         }
@@ -81,6 +83,11 @@ public class BarMeta extends GenericMeta<Bar> {
                 int index = TabManager.addTab(tabTitle + selected.getBarName(), beerQTable, true);
                 TabManager.setActiveTab(index);
             }
+        });
+
+        inventoryBtn.setOnAction(e -> {
+            AddInventoryBox invBox = new AddInventoryBox(selected);
+            invBox.display();
         });
 
         removeBar.setOnAction(e -> {

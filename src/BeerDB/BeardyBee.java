@@ -32,6 +32,10 @@ public class BeardyBee {
         return breweryNames;
     }
 
+    public static HashMap<Integer, Beer> getBeerMap() {
+        return beerMap;
+    }
+
     public static void insertBeer(Beer addingBeer) {
 
         DBConnector.insertTuple(addingBeer);
@@ -48,9 +52,7 @@ public class BeardyBee {
     }
 
     public static void insertInventory(Beer addingBeer, Bar addingBar) {
-        Inventory inv = new Inventory(addingBeer.getBeerId(),
-                addingBar.getBarId());
-
+        Inventory inv = new Inventory(addingBar.getBarId(), addingBeer.getBeerId());
         DBConnector.insertTuple(inv);
     }
 

@@ -39,13 +39,11 @@ public class BeerBuzz implements SQLGenerator{
         return "SELECT * FROM BeerBuzz;\n";
     }
 
-    // no
     @Override
     public String generateUpdateStatement() {
         return null;
     }
 
-    // nah fuck that
     @Override
     public String generateRemoveStatement() {
         return null;

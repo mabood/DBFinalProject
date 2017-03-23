@@ -2,7 +2,6 @@ package guimain;
 
 import BeerDB.Bar;
 import BeerDB.BeardyBee;
-import BeerDB.Brewery;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,57 +10,51 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class EditBreweryBox {
+public class EditBarBox {
     private boolean changed;
-    private Brewery toEdit;
+    private Bar toEdit;
 
-    private Label breweryNameLabel;
-    private Label breweryBlankError;
+    private Label barNameLabel;
+    private Label barBlankError;
+    private Label barExistsError;
     private Label locationLabel;
     private Label locationError;
-    private Label imgLabel;
     private Label modifiedError;
 
-    private TextField breweryNameField;
+    private TextField barNameField;
     private TextField locationField;
-    private TextField imgField;
 
-    public EditBreweryBox(Brewery toEdit) {
+
+    public EditBarBox(Bar toEdit) {
         this.toEdit = toEdit;
         changed = false;
-        breweryNameLabel = new Label("Brewery Name:");
-        breweryBlankError = new Label("Brewery name cannot be blank!");
-        breweryBlankError.setVisible(false);
-        breweryNameField = new TextField();
-        breweryNameField.setText(toEdit.getBreweryName());
-        breweryNameField.setMinWidth(200);
+        barNameLabel = new Label("Bar Name:");
+        barBlankError = new Label("Bar name cannot be blank!");
+        barExistsError = new Label("Bar already exists!");
+        barBlankError.setVisible(false);
+        barExistsError.setVisible(false);
+        barNameField = new TextField();
+        barNameField.setText(toEdit.getBarName());
+        barNameField.setMinWidth(200);
 
-        locationLabel = new Label("Brewery Location:");
+        locationLabel = new Label("Bar Location:");
         locationError = new Label("Location cannot be blank!");
         locationError.setVisible(false);
         locationField = new TextField();
-        locationField.setText(toEdit.getBreweryLocation());
+        locationField.setText(toEdit.getBarLocation());
         locationField.setMinWidth(200);
 
-        imgLabel = new Label("Brewery Image URL:");
-        imgField = new TextField();
-        if (toEdit.getBreweryImgUrl() != null) {
-            imgField.setText(toEdit.getBreweryImgUrl());
-        }
-        imgField.setMinWidth(200);
-
-        modifiedError = new Label("No changes detected");
+        modifiedError = new Label("No changes detected!");
         modifiedError.setVisible(false);
     }
 
     public void display() {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Edit Brewery Entry");
+        window.setTitle("Edit a Bar");
         window.setMinWidth(500);
 
         GridPane layout = new GridPane();
@@ -73,21 +66,19 @@ public class EditBreweryBox {
         pane.setVgap(4);
         pane.setHgap(10);
 
-        Label instructions = new Label("Edit the following Brewery information:");
+        Label instructions = new Label("Edit the following Bar information:");
 
-        GridPane.setConstraints(breweryNameLabel, 0, 0);
-        GridPane.setConstraints(breweryNameField, 1, 0);
-        GridPane.setConstraints(breweryBlankError, 1, 1);
+        GridPane.setConstraints(barNameLabel, 0, 0);
+        GridPane.setConstraints(barNameField, 1, 0);
+        GridPane.setConstraints(barBlankError, 1, 1);
+        GridPane.setConstraints(barExistsError, 1, 1);
         GridPane.setConstraints(locationLabel, 0, 2);
         GridPane.setConstraints(locationField, 1, 2);
         GridPane.setConstraints(locationError, 1, 3);
-        GridPane.setConstraints(imgLabel, 0, 4);
-        GridPane.setConstraints(imgField, 1, 4);
 
         pane.getChildren().addAll(
-                breweryNameLabel, breweryNameField, breweryBlankError,
-                locationLabel, locationField, locationError,
-                imgLabel, imgField);
+                barNameLabel, barNameField, barBlankError, barExistsError,
+                locationLabel, locationField, locationError);
 
         pane.setAlignment(Pos.CENTER);
 
@@ -96,7 +87,7 @@ public class EditBreweryBox {
         errorMessage.getChildren().add(modifiedError);
         HBox buttons = new HBox(10);
         //Create two buttons
-        Button yesButton = new Button("Update Brewery");
+        Button yesButton = new Button("Edit Bar");
         Button noButton = new Button("Cancel");
 
 
@@ -125,19 +116,20 @@ public class EditBreweryBox {
         window.showAndWait();
     }
 
-    private Brewery validateFields() {
-        Brewery brewery = null;
-        String breweryName = breweryNameField.getCharacters().toString();
+    private Bar validateFields() {
+        Bar bar = null;
+        String barName = barNameField.getCharacters().toString();
         String location = locationField.getCharacters().toString();
-        String imgUrl = imgField.getCharacters().toString();
         boolean validated = true;
 
-        if (breweryName.length() == 0) {
+        if (barName.length() == 0) {
             validated = false;
-            breweryBlankError.setVisible(true);
+            barBlankError.setVisible(true);
+            barExistsError.setVisible(false);
         }
         else {
-            breweryBlankError.setVisible(false);
+            barBlankError.setVisible(true);
+            barBlankError.setVisible(false);
         }
 
         if (location.length() == 0) {
@@ -148,32 +140,39 @@ public class EditBreweryBox {
             locationError.setVisible(false);
         }
 
-        if (!imgUrl.contains("http://") && !imgUrl.contains("https://")) {
-            imgUrl = null;
-        }
-
         //after all checks, if validated then create brewery
         if (validated) {
-            brewery = new Brewery(breweryName, location);
-            brewery.setBreweryImgUrl(imgUrl);
+            bar = new Bar(barName, location);
         }
 
-        return brewery;
+        return bar;
     }
 
     private boolean onSubmitClick(Stage window) {
-        Brewery updated = validateFields();
+        Bar updated = validateFields();
         if (updated != null && !toEdit.compareFields(updated)) {
-            toEdit.updateFields(updated.getBreweryName(), updated.getBreweryLocation(), updated.getBreweryImgUrl());
-            BeardyBee.updateBrewery(toEdit);
-            changed = true;
-            return true;
+            System.out.println("first if");
+            if (BeardyBee.barExists(updated.getBarName(), updated.getBarLocation())) {
+                barBlankError.setVisible(false);
+                barExistsError.setVisible(true);
+                return false;
+            }
+            else {
+                toEdit.setBarName(updated.getBarName());
+                toEdit.setBarLocation(updated.getBarLocation());
+                BeardyBee.updateBar(toEdit);
+                changed = true;
+                return true;
+            }
+
         }
         else if (updated != null && toEdit.compareFields(updated)) {
+            System.out.println("here");
             modifiedError.setVisible(true);
             return false;
         }
         else {
+            System.out.println("3rd here");
             modifiedError.setVisible(false);
             return false;
         }

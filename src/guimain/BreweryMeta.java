@@ -80,6 +80,7 @@ public class BreweryMeta extends GenericMeta<Brewery> {
                 TabManager.refreshTab(TabManager.BEERS_INDEX);
             }
         });
+
         allBeersQuery.setOnAction(e -> {
             String tabTitle = "";
             ObservableList<Beer> result = BeardyBee.queryBeersFromBrewery(selected);

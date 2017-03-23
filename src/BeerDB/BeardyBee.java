@@ -21,7 +21,7 @@ public class BeardyBee {
 
     public static boolean barExists(String barName, String barLocation) {
         for (Bar bar : barMap.values()) {
-            if (bar.getBarName() .equals(barName) && bar.getBarLocation().equals(barLocation)) {
+            if (bar.getBarName().equals(barName) && bar.getBarLocation().equals(barLocation)) {
                 return true;
             }
         }

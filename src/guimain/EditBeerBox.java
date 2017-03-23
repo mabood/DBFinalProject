@@ -223,8 +223,7 @@ public class EditBeerBox {
 
     private boolean onSubmitClick(Stage window) {
         Beer updated = validateFields();
-        if (updated != null && !toEdit.equals(updated)) {
-            modifiedError.setVisible(false);
+        if (updated != null && !toEdit.compareFields(updated)) {
             toEdit.setBeerName(updated.getBeerName());
             toEdit.setBreweryName(updated.getBreweryName());
             toEdit.setBeerAbv(updated.getBeerAbv());
@@ -234,7 +233,7 @@ public class EditBeerBox {
             changed = true;
             return true;
         }
-        else if (updated != null && toEdit.equals(updated)) {
+        else if (updated != null && toEdit.compareFields(updated)) {
             modifiedError.setVisible(true);
             return false;
         }

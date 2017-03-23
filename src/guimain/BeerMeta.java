@@ -89,6 +89,7 @@ public class BeerMeta extends GenericMeta<Beer> {
                 parentPage.updateTable();
             }
         });
+
         allBarsQuery.setOnAction(e -> {
             String tabTitle = "";
             ObservableList<Bar> result = BeardyBee.queryBarsFromBeer(selected);

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class AlertBox {
 
-    public static void display(String title, String message) {
+    public static boolean display(String title, String message) {
         Stage window = new Stage();
 
         //Block events to other windows
@@ -33,6 +33,7 @@ public class AlertBox {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
+        return true;
     }
 
 }

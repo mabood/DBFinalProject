@@ -1,13 +1,44 @@
 package BeerDB;
 
+import java.io.*;
 import java.sql.*;
-import com.mysql.jdbc.Driver;
 import guimain.AlertBox;
-
-import javax.xml.transform.Result;
+import guimain.CriticalAlertBox;
+import java.util.Properties;
 
 public class DBConnector {
-    static Connection currentConnection = null;
+    private static Connection currentConnection = null;
+    private static String dbUrl = loadConfigs("DATABASE");
+    private static String dbUser = loadConfigs("DBUSER");
+    private static String dbPassword = loadConfigs("DBPASSWORD");
+
+    private static String loadConfigs(String propertyKey) {
+        Properties prop = new Properties();
+        InputStream input = null;
+        String propertyValue = "";
+
+        try {
+
+            input = new FileInputStream("conf/db.properties");
+            prop.load(input);
+            propertyValue = prop.getProperty(propertyKey);
+
+        } catch (IOException io) {
+            CriticalAlertBox.displayAndQuit("Error reading properties file", io.getMessage());
+            io.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        return propertyValue;
+    }
 
     private static Connection getConnection() {
 
@@ -19,11 +50,7 @@ public class DBConnector {
                 Class.forName("com.mysql.jdbc.Driver");
 
                 Connection connect;
-                connect = DriverManager.getConnection(
-                        "jdbc:mysql://beerdb-inst.cmkxc8yt6omz.us-west-2." +
-                                "rds.amazonaws.com:3306/Beer_Database?user=beerDB" +
-                                "&password=PEOPLEMUMBLE");
-
+                connect = DriverManager.getConnection(dbUrl + "?user=" + dbUser + "&password=" + dbPassword);
 
                 return connect;
             }
